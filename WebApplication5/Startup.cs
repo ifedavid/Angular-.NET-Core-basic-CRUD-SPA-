@@ -53,6 +53,7 @@ namespace WebApplication5
                 options.Password.RequiredLength = 8;
                 options.Password.RequiredUniqueChars = 0;
                 options.Password.RequireUppercase = true;
+                options.Password.RequireNonAlphanumeric = false;
 
                 //lockut settings
                 options.Lockout.MaxFailedAccessAttempts = 5;

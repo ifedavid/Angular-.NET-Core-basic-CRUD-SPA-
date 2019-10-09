@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import {map} from 'rxjs/operators';
-import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 
 
 
@@ -12,47 +12,68 @@ import { RouterModule } from '@angular/router';
 export class AccountService {
 
   //communicate with web api
-  constructor(private http: HttpClient, private router: RouterModule) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
-  private baseUrlLogin = 'api/controller/loginCustomer';
-
-  public LoginStatus = new BehaviorSubject<boolean>(this.setLoginStatus());
-  private UserName = new BehaviorSubject<string>(localStorage.getItem('username'));
-  private Role = new BehaviorSubject<string>(localStorage.getItem('userRole'));
-
-  login(username: string, password: string){
-
-    return this.http.post<any>(this.baseUrlLogin, {username, password}).pipe(
-      map(result => {
- 
-        if (result && result.username){
+  //properties needed
+  private baseUrlRegister = 'api/Account/Register';
+  private baseUrlLogin = 'api/Account/Login';
+  private loginStatus = new BehaviorSubject<boolean>(this.getLoginStatus());
+  private username = new BehaviorSubject<string>(localStorage.getItem('Username'));
+  private userRole = new BehaviorSubject<string>(localStorage.getItem('userRole'));
+  private supp : string;
 
 
-          this.LoginStatus.next(true);
-          localStorage.setItem('loginStatus', '1');
-          localStorage.setItem('username', result.username);
-          localStorage.setItem('userRole', result.userRole);
-        }
-        return result;
-       })
+  getLoginStatus(): boolean {
+return  false;
+}
 
+get IsLoggedIn() {
+  return this.loginStatus;
+}
+get CurrentUsername() {
+  return this.username;
+}
+get CurrentUserRole() {
+  return this.userRole;
+}
 
+  //register method
+  Login(userData) {
+    return this.http.post<any>(this.baseUrlLogin, userData).pipe(
+     map(result => {
+
+      if (result && result.username) {
+            this.loginStatus.next(true);
+            localStorage.setItem('loginStatus', '1');
+            localStorage.setItem('username', result.username);
+            localStorage.setItem('userRole', result.userRole);
+      }
+      return result;
+     })
     );
   }
 
-  logout(){
-    localStorage.setItem('loginStatus', '0');
-    localStorage.removeItem('username');
-    localStorage.removeItem('userRole');
-    this.LoginStatus.next(false);
-    this.router.navigate(['/login']);
-    console.log('The user was successfully logged out');
 
-  }
-  setLoginStatus(): boolean
-  {
-    return false;
-  }
+   Register(userData) {
+     return this.http.post<any>(this.baseUrlRegister, userData).pipe(
+      map(result =>  {
+        return result;
+      })
+
+     );
+   }
+
+   Logout() {
+     this.loginStatus.next(false);
+     localStorage.setItem('loginStatus', '0');
+     localStorage.removeItem('username');
+     localStorage.removeItem('userRole');
+     this.router.navigate(['/login']);
+     console.log('User Logged out successfully');
+   }
+
+
+
 
 
 }

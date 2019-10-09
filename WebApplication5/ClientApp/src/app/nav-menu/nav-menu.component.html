@@ -1,30 +1,10 @@
-<header>
-  <div class="collapse bg-dark" id="navbarHeader">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-8 col-md-7 py-4">
-          <h4 class="text-white">About</h4>
-          <p class="text-muted">Add some information about the album below, the author, or any other background context. Make it a few sentences long so folks can pick up some informative tidbits. Then, link them off to some social networking sites or contact information.</p>
-        </div>
-        <div class="col-sm-4 offset-md-1 py-4">
-          <h4 class="text-white">Get Started!</h4>
-          <ul class="list-unstyled">
-            <li><a  class="text-white" [routerLink]="['/tours']" routerLinkActive="router-link-active" >Explore our tours</a></li>
-            <li><a  class="text-white" [routerLink]="['/tourplanners']" routerLinkActive="router-link-active" >Follow our tour planners</a></li>
-            <li><a  class="text-white" [routerLink]="['/login']" routerLinkActive="router-link-active" >Wemove Hire</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="navbar navbar-dark bg-dark shadow-sm">
-    <div class="container d-flex justify-content-between">
-      <a [routerLink]="['/home']" routerLinkActive="router-link-active"  class="navbar-brand d-flex align-items-center">
-        <strong>Rally By Wemove</strong>
-      </a>
-      <button   class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </div>
-  </div>
-</header>
+<nav class="navbar navbar-dark d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+  <a class="navbar-brand" rou>My Spending Beta</a>
+  <nav class="my-2 my-md-0 mr-md-3">
+    <a class="p-2 text-dark" href="#">Features</a>
+    <a class="p-2 text-dark" href="#">Enterprise</a>
+    <a class="p-2 text-dark" href="#">Support</a>
+    <a class="p-2 text-dark" href="#">Pricing</a>
+  </nav>
+  <a class="btn btn-outline-primary" [routerLink]="['/register']" routerLinkActive="router-link-active" >Sign up</a>
+</nav>

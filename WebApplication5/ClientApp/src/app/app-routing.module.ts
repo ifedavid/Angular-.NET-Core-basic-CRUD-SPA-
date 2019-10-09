@@ -14,7 +14,7 @@ const routes: Routes = [];
 @NgModule({
   imports: [RouterModule.forRoot([
     {path: 'home' , component: HomeComponent},
-    {path: '', component: HomeComponent, patchMatch:'full' },
+    {path: '', component: HomeComponent, pathMatch: 'full' },
     {path: 'register', component: RegisterComponent},
     {path: 'login', component: LoginComponent},
     {path: 'tours', component: ToursComponent},

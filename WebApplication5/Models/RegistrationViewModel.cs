@@ -8,14 +8,10 @@ namespace WebApplication5.Models
 {
     public class RegistrationViewModel
     {
+
         [Required]
         [DataType(DataType.EmailAddress)]
-        public string email { get; set; }
-
-
-        [Required]
-        [DataType(DataType.Text)]
-        public string Username { get; set; }
+        public string EmailAddress { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
