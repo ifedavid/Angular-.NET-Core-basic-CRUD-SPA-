@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { AccountService } from '../services/account.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from "angularx-social-login";
+import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
+
 
 
 
@@ -13,13 +16,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private accountService: AccountService, private route: Router, private Url: ActivatedRoute) { }
+  // tslint:disable-next-line: max-line-length
+  constructor(private fb: FormBuilder, private accountService: AccountService, private route: Router, private Url: ActivatedRoute, private authService: AuthService ) { }
 
    loginForm: FormGroup;
    returnUrl: string;
    resultMessage: string;
    invalidLogin: boolean;
-  
 
   ngOnInit() {
     this.loginForm = this.fb.group( {
@@ -32,26 +35,25 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.Url.snapshot.queryParams['/returnUrl'] || ['/home'] ;
   }
 
-  onSubmit() {
-    console.log(this.loginForm);
-    this.accountService.Login(this.loginForm.value).
-    subscribe(
-      result => {
-        this.invalidLogin = false;
-        console.log('success', result);
-        let username = result.username;
-        let userRole = result.userRole;
-        console.log(username + userRole);
-        this.route.navigate(['/']);
-      },
-      error => {
-        this.invalidLogin = true;
+  /*signInWithGoogle(): void {
+    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  }*/
 
-        this.resultMessage = 'Couldn\'t authenticate user. Please check your credentials';
-        console.log(error);
-    }
+  signInWithGoogle(platform: string): void {
+    platform = GoogleLoginProvider.PROVIDER_ID;
+    this.authService.signIn(platform).then(
+      (response) => {
+        console.log(platform + ' logged in user data is= ' , response);
+      }
     );
-
   }
 
-}
+  signInWithFacebook(){
+    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then(
+      (response) => {
+        console.log(FacebookLoginProvider.PROVIDER_ID + ' logged in user data is= ' , response);
+      }
+    );
+  }
+
+  }

@@ -10,7 +10,25 @@ import { HomeComponent } from './home/home.component';
 import { ToursComponent } from './tours/tours.component';
 import { TourPlannersComponent } from './tour-planners/tour-planners.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
+import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 
+
+let config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider('233670777619-6m2r1t4bedr0au7tuf8betgmu3vqp79p.apps.googleusercontent.com')
+  },
+  {
+    id: FacebookLoginProvider.PROVIDER_ID,
+    provider: new FacebookLoginProvider('2738895199456484')
+  },
+  
+]);
+
+export function provideConfig() {
+  return config;
+}
 
 @NgModule({
   declarations: [
@@ -27,9 +45,16 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    SocialLoginModule.initialize(config)
   ],
-  providers: [],
+  providers: [
+    {
+    provide: AuthServiceConfig,
+    useFactory: provideConfig
+    }
+  ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
