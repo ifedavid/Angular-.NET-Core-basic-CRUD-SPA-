@@ -25,14 +25,16 @@ namespace WebApplication5.Data
 
             builder.Entity<IdentityRole>().HasData(
                 new { Id = "1", Name = "admin", NormalizedName = "ADMIN" },
-                new { Id = "2", Name = "customer", NormalizedName = "CUSTOMER" },
-                new { Id = "3", Name = "planner", NormalizedName = "PLANNER" }
-
+                new { Id = "2", Name = "user", NormalizedName = "USER" }
                 );
    
         }
 
-        public DbSet<ToursModel> Tours { get; set; }
-        public DbSet<TourPlannersModel> TourPlanners { get; set; }
+
+
+        public DbSet<UserData> UserData { get; set; }
+        public DbSet<DailySpendings> Spendings { get; set; }
+        public DbSet<Category> Categories { get; set; }
+       
     }
 }

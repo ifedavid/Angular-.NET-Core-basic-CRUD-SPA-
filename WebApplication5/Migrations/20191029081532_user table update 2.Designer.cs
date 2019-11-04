@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication5.Data;
 
 namespace WebApplication5.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191029081532_user table update 2")]
+    partial class usertableupdate2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,8 +54,14 @@ namespace WebApplication5.Migrations
                         new
                         {
                             Id = "2",
-                            Name = "user",
-                            NormalizedName = "USER"
+                            Name = "customer",
+                            NormalizedName = "CUSTOMER"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            Name = "planner",
+                            NormalizedName = "PLANNER"
                         });
                 });
 
@@ -194,43 +202,65 @@ namespace WebApplication5.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("WebApplication5.Models.Category", b =>
+            modelBuilder.Entity("WebApplication5.Models.TourPlannersModel", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("TourPlannerId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Amount");
+                    b.Property<string>("AboutTourPlanner");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("TourPlannerEmail")
                         .IsRequired();
 
-                    b.Property<DateTime?>("SpendingsDate");
+                    b.Property<string>("TourPlannerFullname")
+                        .IsRequired();
 
-                    b.Property<DateTime>("TimeStamp");
+                    b.Property<string>("TourPlannerPassword")
+                        .IsRequired();
 
-                    b.HasKey("Id");
+                    b.Property<string>("TourPlannerPhoneNumber")
+                        .IsRequired();
 
-                    b.HasIndex("SpendingsDate");
+                    b.Property<string>("TourPlannerWebsite");
 
-                    b.ToTable("Categories");
+                    b.HasKey("TourPlannerId");
+
+                    b.ToTable("TourPlanners");
                 });
 
-            modelBuilder.Entity("WebApplication5.Models.DailySpendings", b =>
+            modelBuilder.Entity("WebApplication5.Models.ToursModel", b =>
                 {
-                    b.Property<DateTime>("Date");
+                    b.Property<int>("TourId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("UserId");
+                    b.Property<string>("Description")
+                        .IsRequired();
 
-                    b.HasKey("Date");
+                    b.Property<int>("Duration");
 
-                    b.HasIndex("UserId");
+                    b.Property<DateTime>("EndDate");
 
-                    b.ToTable("Spendings");
+                    b.Property<int>("OptinPrice");
+
+                    b.Property<DateTime>("StartDate");
+
+                    b.Property<string>("TourName")
+                        .IsRequired();
+
+                    b.Property<int>("TourPlannerId");
+
+                    b.HasKey("TourId");
+
+                    b.HasIndex("TourPlannerId");
+
+                    b.ToTable("Tours");
                 });
 
-            modelBuilder.Entity("WebApplication5.Models.UserData", b =>
+            modelBuilder.Entity("WebApplication5.Models.Users", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -243,17 +273,17 @@ namespace WebApplication5.Migrations
                     b.Property<string>("LastName")
                         .IsRequired();
 
-                    b.Property<string>("PictureUrl");
+                    b.Property<string>("PictureUrl")
+                        .IsRequired();
 
                     b.Property<string>("Provider")
                         .IsRequired();
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                    b.Property<long>("UserId");
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserData");
+                    b.ToTable("UsersData");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -301,18 +331,12 @@ namespace WebApplication5.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("WebApplication5.Models.Category", b =>
+            modelBuilder.Entity("WebApplication5.Models.ToursModel", b =>
                 {
-                    b.HasOne("WebApplication5.Models.DailySpendings", "Spendings")
-                        .WithMany("Categories")
-                        .HasForeignKey("SpendingsDate");
-                });
-
-            modelBuilder.Entity("WebApplication5.Models.DailySpendings", b =>
-                {
-                    b.HasOne("WebApplication5.Models.UserData", "User")
-                        .WithMany("Spendings")
-                        .HasForeignKey("UserId");
+                    b.HasOne("WebApplication5.Models.TourPlannersModel", "TourPlanner")
+                        .WithMany()
+                        .HasForeignKey("TourPlannerId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

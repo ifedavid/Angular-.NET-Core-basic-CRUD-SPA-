@@ -1,0 +1,53 @@
+
+<div class="container">
+
+     <div style="Padding-top:30px">
+       <button  (click)="getCategories()" class="btn btn-success Facebook">Get categories</button>
+     </div>
+
+  <div>
+    <h4>{{CategoryForm.value | json}}</h4>
+  
+        
+    <form style="padding-top:30px" [formGroup]="CategoryForm">
+
+
+      <button  (click)="AddCategory()" class="btn btn-secondary">Add Categories</button>
+          
+      <div formArrayName="Categories">
+       
+        <div style="padding-top:30px" *ngFor="let category of Categories.controls; let i = index" [formGroupName]="i">
+
+            <div class="form-group">
+              <label for="CatName">Category Name</label>
+              <input type="text" class="form-control" id="CatName" required formControlName="CategoryName" placeholder="Category name" >
+            </div>
+
+          <div class="form-group">
+            <label for="CatAmount">Amount spent on category</label>
+            <input type="number" class="form-control" id="CatAmount" formControlName="CategoryAmount" placeholder="Amount spent" >
+          </div>
+
+
+           <div>
+              <button  (click)="AddCategory()" class="btn btn-primary">Add Category</button>
+              <button  (click)="DeleteCategory(i)" class="btn btn-danger">Delete Category</button>
+            </div>
+
+        </div>
+       
+      </div>
+    
+
+      <div style="padding-top:30px; float:right;">
+        <button (click)="SaveCategories()" class="btn btn-dark">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+  
+
+
+

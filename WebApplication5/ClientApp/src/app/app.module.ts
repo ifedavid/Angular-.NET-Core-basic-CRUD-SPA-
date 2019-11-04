@@ -5,13 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { ToursComponent } from './tours/tours.component';
 import { TourPlannersComponent } from './tour-planners/tour-planners.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
+import { CategoriesComponent } from './categories/categories.component';
 
 
 let config = new AuthServiceConfig([
@@ -23,7 +23,6 @@ let config = new AuthServiceConfig([
     id: FacebookLoginProvider.PROVIDER_ID,
     provider: new FacebookLoginProvider('2738895199456484')
   },
-  
 ]);
 
 export function provideConfig() {
@@ -35,10 +34,10 @@ export function provideConfig() {
     AppComponent,
     NavMenuComponent,
     LoginComponent,
-    RegisterComponent,
     HomeComponent,
     ToursComponent,
-    TourPlannersComponent
+    TourPlannersComponent,
+    CategoriesComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +45,7 @@ export function provideConfig() {
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    SocialLoginModule.initialize(config)
+    SocialLoginModule.initialize(config),
   ],
   providers: [
     {

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication5.Data;
 
 namespace WebApplication5.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191103045726_building models")]
+    partial class buildingmodels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,8 +54,14 @@ namespace WebApplication5.Migrations
                         new
                         {
                             Id = "2",
-                            Name = "user",
-                            NormalizedName = "USER"
+                            Name = "customer",
+                            NormalizedName = "CUSTOMER"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            Name = "planner",
+                            NormalizedName = "PLANNER"
                         });
                 });
 
@@ -201,8 +209,7 @@ namespace WebApplication5.Migrations
 
                     b.Property<int>("Amount");
 
-                    b.Property<string>("Name")
-                        .IsRequired();
+                    b.Property<string>("Name");
 
                     b.Property<DateTime?>("SpendingsDate");
 
