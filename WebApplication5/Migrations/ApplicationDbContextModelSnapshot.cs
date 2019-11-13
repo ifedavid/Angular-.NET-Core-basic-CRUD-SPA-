@@ -52,14 +52,8 @@ namespace WebApplication5.Migrations
                         new
                         {
                             Id = "2",
-                            Name = "customer",
-                            NormalizedName = "CUSTOMER"
-                        },
-                        new
-                        {
-                            Id = "3",
-                            Name = "planner",
-                            NormalizedName = "PLANNER"
+                            Name = "user",
+                            NormalizedName = "USER"
                         });
                 });
 
@@ -200,60 +194,85 @@ namespace WebApplication5.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("WebApplication5.Models.TourPlannersModel", b =>
+            modelBuilder.Entity("WebApplication5.Models.Category", b =>
                 {
-                    b.Property<int>("TourPlannerId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AboutTourPlanner");
+                    b.Property<int>("Amount");
 
-                    b.Property<string>("TourPlannerEmail")
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<Guid>("DailySpendingsDateId");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<string>("TourPlannerFullname")
-                        .IsRequired();
+                    b.Property<DateTime>("UpdatedAt");
 
-                    b.Property<string>("TourPlannerPassword")
-                        .IsRequired();
+                    b.HasKey("Id");
 
-                    b.Property<string>("TourPlannerPhoneNumber")
-                        .IsRequired();
+                    b.HasIndex("DailySpendingsDateId");
 
-                    b.Property<string>("TourPlannerWebsite");
-
-                    b.HasKey("TourPlannerId");
-
-                    b.ToTable("TourPlanners");
+                    b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("WebApplication5.Models.ToursModel", b =>
+            modelBuilder.Entity("WebApplication5.Models.DailySpendings", b =>
                 {
-                    b.Property<int>("TourId")
+                    b.Property<Guid>("DateId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CreatedAt")
+                        .IsRequired();
+
+                    b.Property<string>("Date")
+                        .IsRequired();
+
+                    b.Property<int>("TotalAmount");
+
+                    b.Property<string>("UpdatedAt")
+                        .IsRequired();
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("DateId");
+
+                    b.HasIndex("Date")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Spendings");
+                });
+
+            modelBuilder.Entity("WebApplication5.Models.UserData", b =>
+                {
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description")
+                    b.Property<string>("EmailAddress")
                         .IsRequired();
 
-                    b.Property<int>("Duration");
-
-                    b.Property<DateTime>("EndDate");
-
-                    b.Property<int>("OptinPrice");
-
-                    b.Property<DateTime>("StartDate");
-
-                    b.Property<string>("TourName")
+                    b.Property<string>("FirstName")
                         .IsRequired();
 
-                    b.Property<int>("TourPlannerId");
+                    b.Property<string>("LastName")
+                        .IsRequired();
 
-                    b.HasKey("TourId");
+                    b.Property<string>("PictureUrl");
 
-                    b.HasIndex("TourPlannerId");
+                    b.Property<string>("Provider")
+                        .IsRequired();
 
-                    b.ToTable("Tours");
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserData");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -301,11 +320,19 @@ namespace WebApplication5.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("WebApplication5.Models.ToursModel", b =>
+            modelBuilder.Entity("WebApplication5.Models.Category", b =>
                 {
-                    b.HasOne("WebApplication5.Models.TourPlannersModel", "TourPlanner")
+                    b.HasOne("WebApplication5.Models.DailySpendings", "DailySpendings")
                         .WithMany()
-                        .HasForeignKey("TourPlannerId")
+                        .HasForeignKey("DailySpendingsDateId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("WebApplication5.Models.DailySpendings", b =>
+                {
+                    b.HasOne("WebApplication5.Models.UserData", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

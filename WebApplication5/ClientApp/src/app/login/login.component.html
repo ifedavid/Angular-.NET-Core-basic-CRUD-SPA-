@@ -1,40 +1,35 @@
+
 <div  class="container-fluid">
 
 
 
-   <div id='errorAlert' class="alert alert-danger text-center"  *ngIf="invalidLogin">
-     {{resultMessage}}
+    <div ngNativeValidate class="form-signin"   style="padding-top: 5em; text-align:center">
+
+           <h5 style="color:red; padding-bottom:10px;">
+              {{resultMessage}}
+             </h5>
+
+
+      <div>
+        <button  (click)="signInWithGoogle('Google')" class="btn btn-danger Google">Log in with Google</button>
+      </div>
+
+  
+
+      <div style="Padding-top:30px">
+        <button  (click)="signInWithFacebook('Facebook')" class="btn btn-primary Facebook">Log in with Facebook</button>
+
+      </div>
+
+
+      <div style="Padding-top:30px">
+          <button  (click)="signOut()" class="btn btn-success Facebook">Sign Out</button>
+
+        </div>
+
+          <ngx-loading [show]="loading"
+      ></ngx-loading>
     </div>
-
-    <form ngNativeValidate class="form-signin" [formGroup]="loginForm" (ngSubmit)="onSubmit()"  style="padding-top: 5em;">
-
-
-
-        <h1 class="h3 mb-3 font-weight-normal">Login into your Account</h1>
-
-        <div class="form-group">
-
-        <input required type="email"  formControlName= "EmailAddress"  class="form-control"
-        [class.is-invalid]="loginForm.get('EmailAddress').invalid && loginForm.get('EmailAddress').touched"
-         placeholder="Email address" >
-      </div>
-
-        <div class="form-group">
-          <label class="error" *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched">Password is invalid</label>
-        <input required formControlName="password" type="password"  class="form-control"
-        [class.is-invalid]="loginForm.get('password').invalid && loginForm.get('password').touched"
-         placeholder="Password">
-      </div>
-
-
-        <button    type="submit" class="btn btn-lg btn-block btn-primary  ">Log In</button>
-
-        <button [routerLink]="['/register']" routerLinkActive="router-link-active" class="btn btn-lg btn-dark btn-block"
-        >Create an Account</button>
-
-
-
-    </form>
 
 </div>
 

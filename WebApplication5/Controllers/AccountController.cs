@@ -1,21 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using WebApplication5.Data;
 using WebApplication5.Models;
 
 namespace WebApplication5.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("EnableCors")]
     public class AccountController : Controller
     {
 
         public readonly UserManager<IdentityUser> _userManager;
         public readonly SignInManager<IdentityUser> _signInManager;
         private readonly ApplicationDbContext _db;
+      
 
         public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ApplicationDbContext db)
         {
@@ -24,69 +31,92 @@ namespace WebApplication5.Controllers
             _signInManager = signInManager;
         }
 
-        [HttpPost("[action]")]
-        public async Task<IActionResult> Register([FromBody] RegistrationViewModel userdata)
-        {
-            List<string> Errors = new List<string>();
-
-
-            var user = new IdentityUser
-            {
-                Email = userdata.EmailAddress,
-                UserName = userdata.EmailAddress,
-                SecurityStamp = Guid.NewGuid().ToString()
-            };
-
-            var result = await _userManager.CreateAsync(user, userdata.Password);
-
-            if (result.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(user, "customer");
-               
-                //send confirmation email
-                return Ok(new { username = user.Email, status = 1, message = "Registration successful" });
-
-            }
-
-            else
-            {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                    Errors.Add(error.Description);
-                }
-            }
-
-            return BadRequest(new JsonResult(Errors));
-
-
-        }
-        
-
-
-
-
 
         [HttpPost("[action]")]
         public async Task<IActionResult> Login([FromBody] LoginViewModel userdata)
         {
 
-            var user = await _userManager.FindByEmailAsync(userdata.EmailAddress);
-
-            var role = await _userManager.GetRolesAsync(user);
-
-            if (user != null && await _userManager.CheckPasswordAsync(user, userdata.Password))
+            if (userdata != null)
             {
-                return Ok(new { username = user.Email, userRole = role, message = "Login Successful" });
+                var alreadySaved = _db.UserData.Where(Uid => Uid.UserId == userdata.UserId).FirstOrDefault();
+
+             
+
+                if (ModelState.IsValid)
+                {
+
+
+                    var claims = new[]
+                  {
+                        new Claim(JwtRegisteredClaimNames.Sub, userdata.FirstName),
+                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                        new Claim(JwtRegisteredClaimNames.UniqueName, userdata.UserId )
+                    };
+
+                    var loginKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MySuperSecureKey"));
+
+                    var token = new JwtSecurityToken(
+                        issuer: "ifeoluwa",
+                        audience: "ifeoluwa",
+                        expires: DateTime.UtcNow.AddYears(1),
+                        claims: claims,
+                        signingCredentials: new Microsoft.IdentityModel.Tokens.SigningCredentials(loginKey, SecurityAlgorithms.HmacSha256)
+                        );
+
+                    if (alreadySaved != null)
+                    {
+                        return Ok(new
+                        {
+                            id = alreadySaved.Id,
+                            message = "User data has already been saved",
+                            token = new JwtSecurityTokenHandler().WriteToken(token),
+                            expiration = token.ValidTo,
+                            username = alreadySaved.Fullname(),
+                            userRole = "user",
+                        });
+                    }
+
+                    var user = new UserData
+                    {
+                        UserId = userdata.UserId,
+                        FirstName = userdata.FirstName,
+                        LastName = userdata.LastName,
+                        PictureUrl = userdata.PictureUrl,
+                        EmailAddress = userdata.EmailAddress,
+                        Provider = userdata.Provider
+                    };
+
+                 
+
+                   await _db.AddAsync(user);
+
+                   await _db.SaveChangesAsync();
+
+                    
+                  
+                    return Ok(new
+                    {
+                        id = user.Id,
+                        message = "User Login successful",
+                        username = user.Fullname(),
+                        userRole = "user",
+                        token = new JwtSecurityTokenHandler().WriteToken(token),
+                        expiration = token.ValidTo
+                    });
+
+                }
             }
-
            
-            return Unauthorized(new { LoginError = "Please check your credentials. Email Address/Password not found. Couldn't validate user" });
+                var errors = ModelState.Values.First().Errors;
 
-        }
+                return BadRequest(new JsonResult(errors));
+
+            
+
+    }
 
 
-   
+
     }
          
 }

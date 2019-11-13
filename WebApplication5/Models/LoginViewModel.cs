@@ -8,12 +8,24 @@ namespace WebApplication5.Models
 {
     public class LoginViewModel
     {
-        [Required]
-        [DataType(DataType.EmailAddress)]
+
+        public string UserId { get; set; }
+
+       
+        public string FirstName { get; set; }
+
+       
+        public string LastName { get; set; }
+
+       
         public string EmailAddress { get; set; }
 
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
+       
+        public string PictureUrl { get; set; }
+
+       
+        public string Provider { get; set; }
+
+
     }
 }
