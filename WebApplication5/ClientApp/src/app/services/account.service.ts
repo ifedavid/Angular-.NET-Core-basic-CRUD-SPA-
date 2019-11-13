@@ -19,11 +19,16 @@ export class AccountService {
   private loginStatus = new BehaviorSubject<boolean>(this.getLoginStatus());
   private username = new BehaviorSubject<string>(localStorage.getItem('username'));
   private userRole = new BehaviorSubject<string>(localStorage.getItem('userRole'));
+  private UserId = new BehaviorSubject<string>(localStorage.getItem('UserId'));
 
 
 
   getLoginStatus(): boolean {
 return  false;
+}
+
+get CurrentUserId() {
+  return this.UserId;
 }
 
 get IsLoggedIn() {
@@ -47,6 +52,7 @@ get CurrentUserRole() {
             localStorage.setItem('username', result.username);
             localStorage.setItem('userRole', result.userRole);
             localStorage.setItem('loginStatus', '1');
+            localStorage.setItem('UserId', result.id);
             localStorage.setItem('token', result.token);
             localStorage.setItem('tokenExpiration', result.expiration);
             console.log('We sent a message to our Controller API. It works');

@@ -5,49 +5,94 @@
        <button  (click)="getCategories()" class="btn btn-success Facebook">Get categories</button>
      </div>
 
-  <div>
-    <h4>{{CategoryForm.value | json}}</h4>
-  
-        
-    <form style="padding-top:30px" [formGroup]="CategoryForm">
 
 
-      <button  (click)="AddCategory()" class="btn btn-secondary">Add Categories</button>
-          
-      <div formArrayName="Categories">
-       
-        <div style="padding-top:30px" *ngFor="let category of Categories.controls; let i = index" [formGroupName]="i">
+     <ngx-loading [show]="loading"></ngx-loading>
 
-            <div class="form-group">
-              <label for="CatName">Category Name</label>
-              <input type="text" class="form-control" id="CatName" required formControlName="CategoryName" placeholder="Category name" >
+     <div>
+       <h4>{{CategoryForm.value | json}}</h4>
+       <h4>{{SavedCategories.value | json}}</h4>
+
+
+       <div *ngIf="errorMessage">
+          <div class="alert alert-danger alert-dismissible fade show" role="alert" style="text-align:center;">
+              <strong>Error!</strong> - {{errorMessage}}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
-
-          <div class="form-group">
-            <label for="CatAmount">Amount spent on category</label>
-            <input type="number" class="form-control" id="CatAmount" formControlName="CategoryAmount" placeholder="Amount spent" >
           </div>
 
 
-           <div>
-              <button  (click)="AddCategory()" class="btn btn-primary">Add Category</button>
-              <button  (click)="DeleteCategory(i)" class="btn btn-danger">Delete Category</button>
+       <div class="row">
+
+         <div class="col-md-4" style="padding-top:30px" *ngFor="let category of categoryData; let i = index" [formGroup] ="SavedCategories" >
+
+           <div class="card" style="width: 20rem;">
+              <div class="card-body">
+
+                <h5 class="card-title">{{category.name}}    </h5>
+               
+                    <div class="form-group">
+                      <label for="CatName">Expense Name</label>
+                      <input type="text" class="form-control" formControlName="SavedCategoryName" id="CatName" value="{{category.name}}" required>
+                    </div>
+         
+                    <div class="form-group">
+                      <label for="CatAmount">Amount spent</label>
+                      <input type="number" class="form-control" formControlName="SavedCategoryAmount" value="{{category.amount}}" id="CatAmount">
+                    </div>
+
+                    <div>
+                        <button (click)="UpdateSavedCategory(i)" style="margin-left:5px;" class="btn btn-dark">Update </button>
+                        <button (click)="DeleteSavedCategory(i)" style="margin-left:20px;" class="btn btn-danger">Delete </button>
+                      </div>
+              
+              </div>
             </div>
 
-        </div>
+         </div>
+       </div>
        
-      </div>
-    
 
-      <div style="padding-top:30px; float:right;">
-        <button (click)="SaveCategories()" class="btn btn-dark">Save</button>
-      </div>
-    </form>
-  </div>
-</div>
+       <form style="padding-top:30px" [formGroup]="CategoryForm">
+
+         <button (click)="AddCategory()" class="btn btn-secondary">Add new spending Expense Category</button>
+
+         <div formArrayName="Categories">
+
+           <div style="padding-top:30px" *ngFor="let category of Categories.controls; let i = index" [formGroupName]="i">
+
+             <div class="form-group">
+               <label for="CatName">Category Name</label>
+               <input type="text" class="form-control" id="CatName" required formControlName="CategoryName" placeholder="Category name">
+             </div>
+
+             <div class="form-group">
+               <label for="CatAmount">Amount spent on category</label>
+               <input type="number" class="form-control" id="CatAmount" formControlName="CategoryAmount" placeholder="Amount spent">
+             </div>
 
 
-  
+             <div>
+               <button (click)="AddCategory()" class="btn btn-primary">Add new Category</button>
+               <button (click)="DeleteCategory(i)" class="btn btn-danger">Delete Category</button>
+             </div>
+
+           </div>
+
+         </div>
+
+
+         <div style="padding-top:30px; float:right;">
+           <button (click)="SaveCategories()" class="btn btn-dark">Save</button>
+         </div>
+       </form>
+     </div>
+
+
+
+
 
 
 

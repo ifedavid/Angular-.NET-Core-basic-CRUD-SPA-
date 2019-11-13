@@ -14,6 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
@@ -41,6 +42,70 @@
     <Compile Remove="Migrations\20191029083745_new user data table.Designer.cs" />
     <Compile Remove="Migrations\20191029083917_drop table.cs" />
     <Compile Remove="Migrations\20191029083917_drop table.Designer.cs" />
+    <Compile Remove="Migrations\20191105190358_guid categoryId.cs" />
+    <Compile Remove="Migrations\20191105190358_guid categoryId.Designer.cs" />
+    <Compile Remove="Migrations\20191105190811_fix categoryId.cs" />
+    <Compile Remove="Migrations\20191105190811_fix categoryId.Designer.cs" />
+    <Compile Remove="Migrations\20191108184823_DataModels update.cs" />
+    <Compile Remove="Migrations\20191108184823_DataModels update.Designer.cs" />
+    <Compile Remove="Migrations\20191108211934_DailySpending Model Update.cs" />
+    <Compile Remove="Migrations\20191108211934_DailySpending Model Update.Designer.cs" />
+    <Compile Remove="Migrations\20191110001201_spending table update.cs" />
+    <Compile Remove="Migrations\20191110001201_spending table update.Designer.cs" />
+    <Compile Remove="Migrations\20191110002030_spending table update.cs" />
+    <Compile Remove="Migrations\20191110002030_spending table update.Designer.cs" />
+    <Compile Remove="Migrations\20191110002538_spending table update.cs" />
+    <Compile Remove="Migrations\20191110002538_spending table update.Designer.cs" />
+    <Compile Remove="Migrations\20191110004649_Help spending table update.cs" />
+    <Compile Remove="Migrations\20191110004649_Help spending table update.Designer.cs" />
+    <Compile Remove="Migrations\20191110004909_Help spending table update.cs" />
+    <Compile Remove="Migrations\20191110004909_Help spending table update.Designer.cs" />
+    <Compile Remove="Migrations\20191110005038_something.cs" />
+    <Compile Remove="Migrations\20191110005038_something.Designer.cs" />
+    <Compile Remove="Migrations\20191110005229_fix.cs" />
+    <Compile Remove="Migrations\20191110005229_fix.Designer.cs" />
+    <Compile Remove="Migrations\20191110005813_fix.cs" />
+    <Compile Remove="Migrations\20191110005813_fix.Designer.cs" />
+    <Compile Remove="Migrations\20191110010143_another fix.cs" />
+    <Compile Remove="Migrations\20191110010143_another fix.Designer.cs" />
+    <Compile Remove="Migrations\20191110010305_help me.cs" />
+    <Compile Remove="Migrations\20191110010305_help me.Designer.cs" />
+    <Compile Remove="Migrations\20191110012833_initial-migration.cs" />
+    <Compile Remove="Migrations\20191110012833_initial-migration.Designer.cs" />
+    <Compile Remove="Migrations\20191110013501_second-migration.cs" />
+    <Compile Remove="Migrations\20191110013501_second-migration.Designer.cs" />
+    <Compile Remove="Migrations\20191110013704_please.cs" />
+    <Compile Remove="Migrations\20191110013704_please.Designer.cs" />
+    <Compile Remove="Migrations\20191110014202_fourth-migration.cs" />
+    <Compile Remove="Migrations\20191110014202_fourth-migration.Designer.cs" />
+    <Compile Remove="Migrations\20191110014406_new-migration.cs" />
+    <Compile Remove="Migrations\20191110014406_new-migration.Designer.cs" />
+    <Compile Remove="Migrations\20191110014544_first-migration.cs" />
+    <Compile Remove="Migrations\20191110014544_first-migration.Designer.cs" />
+    <Compile Remove="Migrations\20191110014750_help-migration.cs" />
+    <Compile Remove="Migrations\20191110014750_help-migration.Designer.cs" />
+    <Compile Remove="Migrations\20191110015234_another-migration.cs" />
+    <Compile Remove="Migrations\20191110015234_another-migration.Designer.cs" />
+    <Compile Remove="Migrations\20191110015808_something.cs" />
+    <Compile Remove="Migrations\20191110015808_something.Designer.cs" />
+    <Compile Remove="Migrations\20191110020024_something again.cs" />
+    <Compile Remove="Migrations\20191110020024_something again.Designer.cs" />
+    <Compile Remove="Migrations\20191110020247_something.cs" />
+    <Compile Remove="Migrations\20191110020247_something.Designer.cs" />
+    <Compile Remove="Migrations\20191110022553_something.cs" />
+    <Compile Remove="Migrations\20191110022553_something.Designer.cs" />
+    <Compile Remove="Migrations\20191110085624_SpendingTable GuidId.cs" />
+    <Compile Remove="Migrations\20191110085624_SpendingTable GuidId.Designer.cs" />
+    <Compile Remove="Migrations\20191110085832_SpendingTable GuidId.cs" />
+    <Compile Remove="Migrations\20191110085832_SpendingTable GuidId.Designer.cs" />
+    <Compile Remove="Migrations\20191110085937_SpendingTable GuidId.cs" />
+    <Compile Remove="Migrations\20191110085937_SpendingTable GuidId.Designer.cs" />
+    <Compile Remove="Migrations\20191110090247_SpendingTable GuidId.cs" />
+    <Compile Remove="Migrations\20191110090247_SpendingTable GuidId.Designer.cs" />
+    <Compile Remove="Migrations\20191110090632_spending Model.cs" />
+    <Compile Remove="Migrations\20191110090632_spending Model.Designer.cs" />
+    <Compile Remove="Migrations\20191110090914_spending Model.cs" />
+    <Compile Remove="Migrations\20191110090914_spending Model.Designer.cs" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

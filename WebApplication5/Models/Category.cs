@@ -14,10 +14,17 @@ namespace WebApplication5.Models
         public string Name { get; set; }
         [Required]
         public int Amount { get; set; }
-        [Required]
-        public DateTime TimeStamp { get; set; }
 
-        public DailySpendings Spendings { get; set; }
+        public DateTime CreatedAt { get; set; }
+
+        public DateTime UpdatedAt { get; set; }
+        [Required]
+        public DailySpendings DailySpendings { get; set; }
+
+        [Required]
+        public bool IsDeleted { get; set; }
+
+        
 
 
     }

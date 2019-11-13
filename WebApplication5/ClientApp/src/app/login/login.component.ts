@@ -9,6 +9,8 @@ import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-logi
 
 
 
+
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,6 +20,7 @@ export class LoginComponent implements OnInit {
 
 
   userData: any [] = [];
+  public loading = false;
   // tslint:disable-next-line: max-line-length
   constructor(private fb: FormBuilder, private accountService: AccountService, private route: Router, private Url: ActivatedRoute, private authService: AuthService ) { }
 
@@ -34,6 +37,7 @@ export class LoginComponent implements OnInit {
 
   signInWithGoogle(platform: string): void {
     platform = GoogleLoginProvider.PROVIDER_ID;
+    this.loading = true;
     this.authService.signIn(platform).then(
       (response) => {
         // Get all user details
@@ -55,21 +59,25 @@ export class LoginComponent implements OnInit {
           result => {
           console.log('success', result);
           this.route.navigate(['/home']);
+          this.loading = false;
         },
         error => {
           this.resultMessage = 'There was an error with our database. Sorry!';
           console.log(error);
+          this.loading = false;
         }
         );
       },
       error => {
         console.log(error);
         this.resultMessage = error;
+        this.loading = false;
       }
     );
   }
 
   signInWithFacebook(platform: string): void {
+    this.loading = true;
     platform = FacebookLoginProvider.PROVIDER_ID;
     this.authService.signIn(platform).then(
       (response) => {
@@ -90,9 +98,11 @@ export class LoginComponent implements OnInit {
         this.accountService.Login(this.userData[0]).subscribe(
           result => {
           console.log('success', result);
+          this.loading = false;
           this.route.navigate(['/home']);
         },
         error => {
+          this.loading = false;
           this.resultMessage = 'There was an error from our database. Sorry!';
           console.log(error);
         }
@@ -101,13 +111,16 @@ export class LoginComponent implements OnInit {
       },
       error => {
         console.log(error);
+        this.loading = false;
         this.resultMessage = error;
       }
     );
   }
 
   signOut(): void {
+    this.loading = true;
     this.authService.signOut();
+    this.accountService.Logout();
     console.log('User has signed our');
     this.resultMessage = 'User has signed out';
   }

@@ -22,6 +22,7 @@ namespace WebApplication5.Controllers
         public readonly UserManager<IdentityUser> _userManager;
         public readonly SignInManager<IdentityUser> _signInManager;
         private readonly ApplicationDbContext _db;
+      
 
         public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ApplicationDbContext db)
         {
@@ -39,6 +40,8 @@ namespace WebApplication5.Controllers
             {
                 var alreadySaved = _db.UserData.Where(Uid => Uid.UserId == userdata.UserId).FirstOrDefault();
 
+             
+
                 if (ModelState.IsValid)
                 {
 
@@ -55,7 +58,7 @@ namespace WebApplication5.Controllers
                     var token = new JwtSecurityToken(
                         issuer: "ifeoluwa",
                         audience: "ifeoluwa",
-                        expires: DateTime.UtcNow.AddHours(1),
+                        expires: DateTime.UtcNow.AddYears(1),
                         claims: claims,
                         signingCredentials: new Microsoft.IdentityModel.Tokens.SigningCredentials(loginKey, SecurityAlgorithms.HmacSha256)
                         );
@@ -64,9 +67,12 @@ namespace WebApplication5.Controllers
                     {
                         return Ok(new
                         {
+                            id = alreadySaved.Id,
                             message = "User data has already been saved",
                             token = new JwtSecurityTokenHandler().WriteToken(token),
-                            expiration = token.ValidTo
+                            expiration = token.ValidTo,
+                            username = alreadySaved.Fullname(),
+                            userRole = "user",
                         });
                     }
 
@@ -80,14 +86,17 @@ namespace WebApplication5.Controllers
                         Provider = userdata.Provider
                     };
 
+                 
+
                    await _db.AddAsync(user);
 
                    await _db.SaveChangesAsync();
 
+                    
                   
-
                     return Ok(new
                     {
+                        id = user.Id,
                         message = "User Login successful",
                         username = user.Fullname(),
                         userRole = "user",

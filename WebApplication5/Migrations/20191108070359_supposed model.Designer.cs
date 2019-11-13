@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication5.Data;
 
 namespace WebApplication5.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191108070359_supposed model")]
+    partial class supposedmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -203,44 +205,32 @@ namespace WebApplication5.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
-                    b.Property<Guid>("DailySpendingsDateId");
-
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("Name")
                         .IsRequired();
 
+                    b.Property<string>("SpendingsId");
+
                     b.Property<DateTime>("UpdatedAt");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DailySpendingsDateId");
+                    b.HasIndex("SpendingsId");
 
                     b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("WebApplication5.Models.DailySpendings", b =>
                 {
-                    b.Property<Guid>("DateId")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CreatedAt")
-                        .IsRequired();
+                    b.Property<string>("Date");
 
-                    b.Property<string>("Date")
-                        .IsRequired();
+                    b.Property<int?>("UserId");
 
-                    b.Property<int>("TotalAmount");
-
-                    b.Property<string>("UpdatedAt")
-                        .IsRequired();
-
-                    b.Property<int>("UserId");
-
-                    b.HasKey("DateId");
-
-                    b.HasIndex("Date")
-                        .IsUnique();
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
@@ -322,18 +312,16 @@ namespace WebApplication5.Migrations
 
             modelBuilder.Entity("WebApplication5.Models.Category", b =>
                 {
-                    b.HasOne("WebApplication5.Models.DailySpendings", "DailySpendings")
-                        .WithMany()
-                        .HasForeignKey("DailySpendingsDateId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.HasOne("WebApplication5.Models.DailySpendings", "Spendings")
+                        .WithMany("Categories")
+                        .HasForeignKey("SpendingsId");
                 });
 
             modelBuilder.Entity("WebApplication5.Models.DailySpendings", b =>
                 {
                     b.HasOne("WebApplication5.Models.UserData", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany("Spendings")
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

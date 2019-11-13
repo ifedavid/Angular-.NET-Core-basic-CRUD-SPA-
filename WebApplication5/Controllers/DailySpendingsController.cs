@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Http;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,97 +10,118 @@ using Microsoft.EntityFrameworkCore;
 using WebApplication5.Data;
 using WebApplication5.Models;
 
+
 namespace WebApplication5.Controllers
 {
-    [Authorize]
-    [Route("api/[controller]")]
+    [Microsoft.AspNetCore.Authorization.Authorize]
+    [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
     [ApiController]
-    public class DailySpendingsController : ControllerBase
+    public class DailySpendingsController : Controller
     {
         private readonly ApplicationDbContext _context;
+
+        
 
         public DailySpendingsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/DailySpendings
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<DailySpendings>>> GetSpendings()
-        {
-            return await _context.Spendings.ToListAsync();
-        }
-
         // GET: api/DailySpendings/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<DailySpendings>> GetDailySpendings(DateTime id)
+        [Microsoft.AspNetCore.Mvc.HttpGet("{userId}")]
+        public async Task<ActionResult> GetSpendings([FromUri] int userId)
         {
-            var dailySpendings = await _context.Spendings.FindAsync(id);
+            var user = await _context.UserData.FindAsync(userId);
+
+            var dailySpendings =  _context.Spendings.Where(sp => sp.User == user ).ToList();
 
             if (dailySpendings == null)
             {
-                return NotFound();
-            }
-
-            return dailySpendings;
-        }
-
-        // PUT: api/DailySpendings/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutDailySpendings(DateTime id, DailySpendings dailySpendings)
-        {
-            if (id != dailySpendings.Date)
-            {
                 return BadRequest();
+
             }
 
-            _context.Entry(dailySpendings).State = EntityState.Modified;
-
-            try
+            foreach (var dailySpending in dailySpendings)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DailySpendingsExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                dailySpending.TotalAmount = dailySpending.GetTotalAmount(_context, dailySpending.DateId);
+                
             }
 
-            return NoContent();
+          
+
+            return Ok( dailySpendings );
         }
+
+  
 
         // POST: api/DailySpendings
-        [HttpPost]
-        public async Task<ActionResult<DailySpendings>> PostDailySpendings(DailySpendings dailySpendings)
+        [Microsoft.AspNetCore.Mvc.HttpPost]
+        public async Task<ActionResult> PostDailySpendings(DailySpendingModel Spending)
         {
-            _context.Spendings.Add(dailySpendings);
-            try
+            if (ModelState.IsValid)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (DailySpendingsExists(dailySpendings.Date))
+
+                var savedSpending = _context.Spendings.Where(sp => sp.Date == Spending.date);
+
+                if (savedSpending.Count() != 0)
                 {
-                    return Conflict();
+                    return BadRequest(new { message = "Expense tracker for this day exists already" });
                 }
-                else
+
+                var CurrentUser = _context.UserData.Find(Spending.UserId);
+
+                if (CurrentUser != null && Spending.date != null)
                 {
-                    throw;
+
+                    var dailySpendings = new DailySpendings
+                    {
+                        User = CurrentUser,
+                        Date = Spending.date,
+                        CreatedAt = DateTime.UtcNow.ToLongDateString(),
+                        UpdatedAt = DateTime.UtcNow.ToLongDateString()
+                    };
+
+                   await _context.Spendings.AddAsync(dailySpendings);
+
+                    await _context.SaveChangesAsync();
+
+                    return Ok(new {dateId = dailySpendings.DateId, date = dailySpendings.Date, message = "Save successful" });
+
                 }
+
+                return BadRequest(new { message = "Invalid user Input" });
             }
 
-            return CreatedAtAction("GetDailySpendings", new { id = dailySpendings.Date }, dailySpendings);
+            return BadRequest();
+        }
+
+        //Update
+        [Microsoft.AspNetCore.Mvc.HttpPut]
+        public async Task<IActionResult> UpdateDailySpendings(DailySpendingModel spendingModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var spending = await _context.Spendings.FindAsync(spendingModel.Id);
+
+                if (spending == null)
+                {
+                    return BadRequest(new { message = "Spending not found" });
+                }
+
+                spending.UpdatedAt = spendingModel.updatedAt;
+
+                _context.Entry(spending).State = EntityState.Modified;
+
+                await _context.SaveChangesAsync();
+
+                return Ok(new { message = "Update successfully" });
+            }
+
+            return BadRequest(new { message = "Sorry, an error occured somewhere here" } );
         }
 
         // DELETE: api/DailySpendings/5
-        [HttpDelete("{id}")]
+        [Microsoft.AspNetCore.Mvc.HttpDelete("{id}")]
         public async Task<ActionResult<DailySpendings>> DeleteDailySpendings(DateTime id)
         {
             var dailySpendings = await _context.Spendings.FindAsync(id);
@@ -114,9 +136,14 @@ namespace WebApplication5.Controllers
             return dailySpendings;
         }
 
-        private bool DailySpendingsExists(DateTime id)
-        {
-            return _context.Spendings.Any(e => e.Date == id);
-        }
+       
+    }
+
+    public class DailySpendingModel
+    {
+        public Guid Id { get; set; }
+        public string updatedAt { get; set; }
+        public string date { get; set; }
+        public int UserId { get; set; }
     }
 }

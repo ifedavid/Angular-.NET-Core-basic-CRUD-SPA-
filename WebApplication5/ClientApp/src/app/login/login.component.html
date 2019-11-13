@@ -1,30 +1,34 @@
 
 <div  class="container-fluid">
 
-   
+
 
     <div ngNativeValidate class="form-signin"   style="padding-top: 5em; text-align:center">
-       
+
            <h5 style="color:red; padding-bottom:10px;">
               {{resultMessage}}
-    </h5> 
-        
+             </h5>
+
 
       <div>
         <button  (click)="signInWithGoogle('Google')" class="btn btn-danger Google">Log in with Google</button>
       </div>
 
+  
 
       <div style="Padding-top:30px">
         <button  (click)="signInWithFacebook('Facebook')" class="btn btn-primary Facebook">Log in with Facebook</button>
 
       </div>
 
-      
+
       <div style="Padding-top:30px">
           <button  (click)="signOut()" class="btn btn-success Facebook">Sign Out</button>
-  
+
         </div>
+
+          <ngx-loading [show]="loading"
+      ></ngx-loading>
     </div>
 
 </div>

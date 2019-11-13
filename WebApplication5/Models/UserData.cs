@@ -24,8 +24,6 @@ namespace WebApplication5.Models
         [Required]
         public string EmailAddress { get; set; }
 
-        public List<DailySpendings> Spendings { get; set; }
-
         public string PictureUrl { get; set; }
 
         [Required]

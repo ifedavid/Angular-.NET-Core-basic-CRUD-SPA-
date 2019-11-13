@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication5.Data;
 
 namespace WebApplication5.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191112152357_1-many spending-categories")]
+    partial class _1manyspendingcategories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -216,6 +218,9 @@ namespace WebApplication5.Migrations
 
                     b.HasIndex("DailySpendingsDateId");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Categories");
                 });
 
@@ -229,8 +234,6 @@ namespace WebApplication5.Migrations
 
                     b.Property<string>("Date")
                         .IsRequired();
-
-                    b.Property<int>("TotalAmount");
 
                     b.Property<string>("UpdatedAt")
                         .IsRequired();
@@ -323,7 +326,7 @@ namespace WebApplication5.Migrations
             modelBuilder.Entity("WebApplication5.Models.Category", b =>
                 {
                     b.HasOne("WebApplication5.Models.DailySpendings", "DailySpendings")
-                        .WithMany()
+                        .WithMany("Categories")
                         .HasForeignKey("DailySpendingsDateId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
