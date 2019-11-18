@@ -106,6 +106,8 @@
     <Compile Remove="Migrations\20191110090632_spending Model.Designer.cs" />
     <Compile Remove="Migrations\20191110090914_spending Model.cs" />
     <Compile Remove="Migrations\20191110090914_spending Model.Designer.cs" />
+    <Compile Remove="Migrations\20191116141616_weekNumber.cs" />
+    <Compile Remove="Migrations\20191116141616_weekNumber.Designer.cs" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

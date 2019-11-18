@@ -96,12 +96,12 @@ export class DailySpendingsComponent implements OnInit {
   Update(i) {
     this.loading = true;
     localStorage.setItem('TodayDate', this.SpendingData[i].dateId);
-    let now = new Date().toDateString();
+
 
     let updateArray = [];
     updateArray.push({
       id: localStorage.getItem('TodayDate'),
-      updatedAt: now
+
     });
 
 
@@ -116,5 +116,22 @@ export class DailySpendingsComponent implements OnInit {
     this.route.navigate(['/categories']);
   }
 
+  Delete(i) {
+    this.loading = true;
+    let dateId = this.SpendingData[i].dateId;
+
+    this.userService.DeleteSpending(dateId).subscribe(
+      result => {
+        console.log(result);
+        this.GetSpendings();
+        this.loading = false;
+      },
+      error => {
+        console.log(error);
+        this.loading = false;
+      }
+    );
+
+  }
 
 }

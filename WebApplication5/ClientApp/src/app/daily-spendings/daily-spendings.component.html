@@ -42,11 +42,11 @@
       Expense Track
     </div>
     <div class="card-body">
-      <h5 class="card-title">Spending for {{SpendingData[i].date}}</h5>
+      <h5 class="card-title">Spending for {{SpendingData[i].dateString}}</h5>
       <h6>Total amount spent {{SpendingData[i].totalAmount}}</h6>
       <div style="padding-top:1em;">
       <button  (click)="Update(i)" style="margin-left:10px;" class="btn btn-success">Update</button>
-      <button  style="margin-left:10px;"  class="btn btn-danger">Delete</button>
+      <button  style="margin-left:10px;" (click)="Delete(i)"  class="btn btn-danger">Delete</button>
     </div>
     </div>
     <div  class="card-footer text-muted">

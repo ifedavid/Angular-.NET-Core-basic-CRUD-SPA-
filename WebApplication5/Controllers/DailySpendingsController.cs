@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,7 +34,7 @@ namespace WebApplication5.Controllers
         {
             var user = await _context.UserData.FindAsync(userId);
 
-            var dailySpendings =  _context.Spendings.Where(sp => sp.User == user ).ToList();
+            var dailySpendings =  _context.Spendings.Where(sp => sp.User == user && sp.isDeleted == false ).ToList();
 
             if (dailySpendings == null)
             {
@@ -60,8 +61,11 @@ namespace WebApplication5.Controllers
         {
             if (ModelState.IsValid)
             {
+               var date = DateTime.Parse(Spending.date);
 
-                var savedSpending = _context.Spendings.Where(sp => sp.Date == Spending.date);
+                
+
+                var savedSpending = _context.Spendings.Where(sp => sp.Date == date && sp.isDeleted == false);
 
                 if (savedSpending.Count() != 0)
                 {
@@ -72,20 +76,31 @@ namespace WebApplication5.Controllers
 
                 if (CurrentUser != null && Spending.date != null)
                 {
+                    var someDate = DateTime.Parse(Spending.date);
+
+                    CultureInfo myCI = new CultureInfo("en-UK");
+                    Calendar myCal = myCI.Calendar;
+
+                    CalendarWeekRule myCWR = myCI.DateTimeFormat.CalendarWeekRule;
+                    DayOfWeek myfirstDOW = myCI.DateTimeFormat.FirstDayOfWeek;
+
+                   var weekNumber = myCal.GetWeekOfYear(someDate,myCWR, myfirstDOW);
 
                     var dailySpendings = new DailySpendings
                     {
                         User = CurrentUser,
-                        Date = Spending.date,
+                        Date = someDate,
+                        DateString = someDate.ToShortDateString(),
+                        WeekNumber = weekNumber,
                         CreatedAt = DateTime.UtcNow.ToLongDateString(),
-                        UpdatedAt = DateTime.UtcNow.ToLongDateString()
+                        UpdatedAt = DateTime.UtcNow.ToShortDateString()
                     };
 
                    await _context.Spendings.AddAsync(dailySpendings);
 
                     await _context.SaveChangesAsync();
 
-                    return Ok(new {dateId = dailySpendings.DateId, date = dailySpendings.Date, message = "Save successful" });
+                    return Ok(new {dateId = dailySpendings.DateId, date = dailySpendings.Date.ToShortDateString(), message = "Save successful" });
 
                 }
 
@@ -108,7 +123,7 @@ namespace WebApplication5.Controllers
                     return BadRequest(new { message = "Spending not found" });
                 }
 
-                spending.UpdatedAt = spendingModel.updatedAt;
+                spending.UpdatedAt = DateTime.UtcNow.ToShortDateString();
 
                 _context.Entry(spending).State = EntityState.Modified;
 
@@ -121,19 +136,19 @@ namespace WebApplication5.Controllers
         }
 
         // DELETE: api/DailySpendings/5
-        [Microsoft.AspNetCore.Mvc.HttpDelete("{id}")]
-        public async Task<ActionResult<DailySpendings>> DeleteDailySpendings(DateTime id)
+        [Microsoft.AspNetCore.Mvc.HttpDelete("[action]/{id}")]
+        public async Task<IActionResult> DeleteDailySpendings([FromUri]Guid id)
         {
             var dailySpendings = await _context.Spendings.FindAsync(id);
             if (dailySpendings == null)
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            _context.Spendings.Remove(dailySpendings);
+            dailySpendings.isDeleted = true;
             await _context.SaveChangesAsync();
 
-            return dailySpendings;
+            return Ok(new { message = "Delete successful"});
         }
 
        

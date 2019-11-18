@@ -1,3 +1,24 @@
+<div>
+
+
+  <h4>{{SelectGroup.value | json}}</h4>
+
+<div class="container">
+
+    <ngx-loading [show]="loading"></ngx-loading>
+
+  <form [formGroup]="SelectGroup">
+
+<select required formControlName="Selector">
+
+</select>
+
+<button class="btn btn-primary" (click)="getDailySpending()">Go!</button>
+
+</form>
+
+</div>
+
 <google-chart #chart
    [title]="title"
    [type]="type"
@@ -7,3 +28,10 @@
    [width]="width"
    [height]="height">
 </google-chart>
+
+<div>
+<button (click)="NextWeek()" class="btn btn-primary">Next Week</button>
+<button (click)="PreviousWeek()" class="btn btn-secondary">Previous Week</button>
+</div>
+
+</div>

@@ -28,10 +28,6 @@ namespace WebApplication5.Data
                 new { Id = "2", Name = "user", NormalizedName = "USER" }
                 );
 
-            builder.Entity<DailySpendings>()
-                .HasIndex(ds => ds.Date)
-                .IsUnique();
-   
         }
 
 

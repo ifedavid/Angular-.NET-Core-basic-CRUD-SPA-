@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication5.Data;
 
 namespace WebApplication5.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191116142611_weekNumber")]
+    partial class weekNumber
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -229,9 +231,6 @@ namespace WebApplication5.Migrations
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<string>("DateString")
-                        .IsRequired();
-
                     b.Property<int>("TotalAmount");
 
                     b.Property<string>("UpdatedAt")
@@ -240,8 +239,6 @@ namespace WebApplication5.Migrations
                     b.Property<int>("UserId");
 
                     b.Property<int>("WeekNumber");
-
-                    b.Property<bool>("isDeleted");
 
                     b.HasKey("DateId");
 

@@ -59,7 +59,7 @@ get Categories(): FormArray {
 
   getCategories() {
     this.loading = true;
-    let currentDate = localStorage.getItem('TodayDate');
+    let currentDate: string = localStorage.getItem('TodayDate');
     this.userService.getCategories(currentDate).subscribe(
       result => {
 
@@ -97,6 +97,7 @@ get Categories(): FormArray {
     this.categoryData.push(this.Categories.value);
 
     let currentDay = localStorage.getItem('TodayDate');
+
     this.userService.SaveCategories(this.Categories.value, currentDay).subscribe(
       result => {
         console.log(result);

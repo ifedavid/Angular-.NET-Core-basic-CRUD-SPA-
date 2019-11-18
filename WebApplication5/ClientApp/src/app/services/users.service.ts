@@ -25,13 +25,16 @@ export class UsersService {
   currentUser = localStorage.getItem('UserId');
 
 
-  private getCategoryUrl = 'api/Category/'
+  private getCategoryUrl = 'api/Category/';
   private updateCategoryUrl = 'api/Category/Update';
   private deleteCategoryUrl = 'api/Category/Delete';
-  
+
   private saveSpendingUrl = 'api/DailySpendings';
   private getSpendingUrl = 'api/DailySpendings/' + this.currentUser;
-  private updateSpendingUrl = 'api/DailySpendings'
+  private updateSpendingUrl = 'api/DailySpendings';
+
+
+
   constructor(private http: HttpClient) { }
 
 
@@ -94,8 +97,17 @@ export class UsersService {
   }
 
   UpdateSpending(UpdateArray) {
-    return this.http.put<any>(this.updateSpendingUrl, UpdateArray,httpOptions).pipe(
+    return this.http.put<any>(this.updateSpendingUrl, UpdateArray, httpOptions).pipe(
       map (result => {
+        console.log(result);
+        return result;
+      })
+    );
+  }
+
+  DeleteSpending(dateId) {
+    return this.http.delete<any>('api/DailySpendings/DeleteDailySpendings/' + dateId, httpOptions).pipe(
+      map  (result => {
         console.log(result);
         return result;
       })

@@ -14,7 +14,13 @@ namespace WebApplication5.Models
         public Guid DateId { get; set; }
 
         [Required]
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
+
+        [Required]
+        public string DateString { get; set; }
+
+        [Required]
+        public int WeekNumber { get; set; }
 
         [Required]
         public UserData User { get; set; }
@@ -26,6 +32,8 @@ namespace WebApplication5.Models
         public string UpdatedAt { get; set; }
 
         public int TotalAmount { get; set; }
+
+        public bool isDeleted { get; set; }
 
         public int GetTotalAmount(ApplicationDbContext context, Guid dateId)
         {
@@ -40,6 +48,8 @@ namespace WebApplication5.Models
             return TotalAmount;
 
         }
+
+        
 
     }
 }
