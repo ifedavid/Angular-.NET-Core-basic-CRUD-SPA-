@@ -1,35 +1,60 @@
 
-<div  class="container-fluid">
+<div  class="container LoginPage">
 
 
 
-    <div ngNativeValidate class="form-signin"   style="padding-top: 5em; text-align:center">
+  <div class="form-signin" style="text-align:center; padding-top:2em;">
 
-           <h5 style="color:red; padding-bottom:10px;">
-              {{resultMessage}}
-             </h5>
+   
+    <div *ngIf="resultMessage">
+      <div class="alert alert-danger" role="alert">
+        {{resultMessage}}
 
+      </div>
+    </div>
+
+    <div class="LoginText">
+      <h3>
+        You're a step away from Spending Better
+      </h3>
+
+      <small class="Less-Important">
+        Sign In with your Google or Facebook Account and Start to SpendBeta.
+      </small>
+
+    </div>
+
+    <div style="padding-top:3em;">
 
       <div>
-        <button  (click)="signInWithGoogle('Google')" class="btn btn-danger Google">Log in with Google</button>
-      </div>
-
-  
-
-      <div style="Padding-top:30px">
-        <button  (click)="signInWithFacebook('Facebook')" class="btn btn-primary Facebook">Log in with Facebook</button>
-
+        <button style="color:#64b2cd" (click)="signInWithGoogle('Google')" class="btn bth-outline-light">
+          <img style="vertical-align:-2px;" height="20" width="20" src="../../assets/Images/search.svg" />
+          Start with Google
+        </button>
       </div>
 
 
-      <div style="Padding-top:30px">
-          <button  (click)="signOut()" class="btn btn-success Facebook">Sign Out</button>
 
-        </div>
+      <div style="Padding-top:1em;">
+        <button style="color:#64b2cd" (click)="signInWithFacebook('Facebook')" class="btn bth-outline-light">
+          <img style="vertical-align:-2px;" width="20" height="20" src="../../assets/Images/facebook.svg" />
+          Start with Facebook
+        </button>
 
-          <ngx-loading [show]="loading"
-      ></ngx-loading>
+      </div>
+
+      <div style="padding-top:3em;">
+        <small class="Less-Important" style="text-align:center; color:white;">
+          Don't have a Facebook or Google Account? Click <a href="#">here</a>
+        </small>
+      </div>
     </div>
+
+
+
+
+    <ngx-loading [show]="loading"></ngx-loading>
+  </div>
 
 </div>
 

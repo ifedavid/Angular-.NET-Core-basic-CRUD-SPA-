@@ -35,6 +35,7 @@ namespace WebApplication5.Data
         public DbSet<UserData> UserData { get; set; }
         public DbSet<DailySpendings> Spendings { get; set; }
         public DbSet<Category> Categories { get; set; }
-       
+
+
     }
 }

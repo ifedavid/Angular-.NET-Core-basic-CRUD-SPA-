@@ -1,0 +1,42 @@
+.MainText {
+  padding-top: 12%;
+  background-color: #64b2cd;
+  height:500px;
+  text-align: center;
+  color: white;
+}
+
+.FeatureText {
+ 
+  color: #64b2cd;
+}
+
+.card-text {
+
+  color:white;
+}
+
+.card {
+ 
+  background-color: #64b2cd;
+}
+
+.modal-body {
+  background-color: #64b2cd;
+}
+
+.modal-title {
+  color: #64b2cd;
+}
+
+.InverseButton {
+  background-color: #64b2cd;
+  color:white;
+}
+
+.HomeButton {
+  background-color: white;
+  color: #64b2cd;
+}
+
+

@@ -16,6 +16,7 @@ import { MaterialModule } from './material.module';
 import { DailySpendingsComponent } from './daily-spendings/daily-spendings.component';
 import { StatsComponent } from './stats/stats.component';
 import { GoogleChartsModule } from 'angular-google-charts';
+import { FooterComponent } from './footer/footer.component';
 
 
 
@@ -43,7 +44,8 @@ export function provideConfig() {
     HomeComponent,
     CategoriesComponent,
     DailySpendingsComponent,
-    StatsComponent
+    StatsComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
