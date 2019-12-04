@@ -1,0 +1,50 @@
+
+
+.start-btn {
+  background-color:#64b2cd;
+  color:white;
+}
+
+.CardMoneyImage {
+  background-size:contain;
+  background-repeat:no-repeat;
+
+}
+
+
+
+
+.app-calendar {
+  margin: 0 auto;
+  max-width: 900px;
+}
+.IconButton {
+  border: none;
+  background-color: transparent;
+  color: white;
+  
+}
+.CreateIconButton:hover {
+  transform: scale(1) rotate(-20deg);
+  color: #28A745;
+  opacity:1;
+}
+
+.fc-content {
+  white-space: normal;
+}
+
+.card-header {
+  background-color: #64b2cd;
+}
+
+.DeleteIconButton:hover {
+  transform: scale(1) rotate(20deg);
+  color: #DC3545;
+  opacity:1;
+}
+
+.card:hover {
+
+  
+}

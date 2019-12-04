@@ -17,20 +17,30 @@ import { DailySpendingsComponent } from './daily-spendings/daily-spendings.compo
 import { StatsComponent } from './stats/stats.component';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { FooterComponent } from './footer/footer.component';
+import { DemoDashboardComponent } from './demo-dashboard/demo-dashboard.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { MatIconModule } from '@angular/material/icon';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 
 
-let config = new AuthServiceConfig([
-  {
-    id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider('233670777619-6m2r1t4bedr0au7tuf8betgmu3vqp79p.apps.googleusercontent.com')
-  },
-  {
-    id: FacebookLoginProvider.PROVIDER_ID,
-    provider: new FacebookLoginProvider('2738895199456484')
-  },
-]);
+
+  let config = new AuthServiceConfig([
+    {
+      id: GoogleLoginProvider.PROVIDER_ID,
+      provider: new GoogleLoginProvider('233670777619-6m2r1t4bedr0au7tuf8betgmu3vqp79p.apps.googleusercontent.com')
+    },
+    {
+      id: FacebookLoginProvider.PROVIDER_ID,
+      provider: new FacebookLoginProvider('2738895199456484')
+    },
+  ]);
+
 
 export function provideConfig() {
   return config;
@@ -45,7 +55,9 @@ export function provideConfig() {
     CategoriesComponent,
     DailySpendingsComponent,
     StatsComponent,
-    FooterComponent
+    FooterComponent,
+    DemoDashboardComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -53,17 +65,21 @@ export function provideConfig() {
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    SocialLoginModule.initialize(config),
+    SocialLoginModule,
     NgxLoadingModule.forRoot({
-      animationType: ngxLoadingAnimationTypes.wanderingCubes,
+      animationType: ngxLoadingAnimationTypes.circle,
       backdropBackgroundColour: 'rgba(192,192,192,0.4)',
       backdropBorderRadius: '4px',
-      primaryColour: '#BE002E',
-      secondaryColour: '#0F246B',
+      primaryColour: '#64b2cd',
+      secondaryColour: '#ffffff',
       tertiaryColour: '#ffffff'
   }),
   MaterialModule,
-  GoogleChartsModule
+    GoogleChartsModule,
+    MatIconModule,
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+    FullCalendarModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     {

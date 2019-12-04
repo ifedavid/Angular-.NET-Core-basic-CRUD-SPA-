@@ -61,22 +61,22 @@ namespace WebApplication5.Controllers
         {
             if (ModelState.IsValid)
             {
-               var date = DateTime.Parse(Spending.date);
-
-                
-
-                var savedSpending = _context.Spendings.Where(sp => sp.Date == date && sp.isDeleted == false);
-
-                if (savedSpending.Count() != 0)
-                {
-                    return BadRequest(new { message = "Expense tracker for this day exists already" });
-                }
+               var someDate = DateTime.Parse(Spending.date);
 
                 var CurrentUser = _context.UserData.Find(Spending.UserId);
 
+                var savedSpending = _context.Spendings.Where(sp => sp.Date == someDate && sp.isDeleted == false && sp.User == CurrentUser);
+
+                if (savedSpending.Count() != 0)
+                {
+                    return BadRequest(new { message = "Expense tracker for" + someDate.ToString("dd-MMM-yyy") + "exists already" });
+                }
+
+              
+
                 if (CurrentUser != null && Spending.date != null)
                 {
-                    var someDate = DateTime.Parse(Spending.date);
+                   
 
                     CultureInfo myCI = new CultureInfo("en-UK");
                     Calendar myCal = myCI.Calendar;
@@ -90,7 +90,7 @@ namespace WebApplication5.Controllers
                     {
                         User = CurrentUser,
                         Date = someDate,
-                        DateString = someDate.ToShortDateString(),
+                        DateString = Spending.date,
                         WeekNumber = weekNumber,
                         CreatedAt = DateTime.UtcNow.ToLongDateString(),
                         UpdatedAt = DateTime.UtcNow.ToShortDateString()

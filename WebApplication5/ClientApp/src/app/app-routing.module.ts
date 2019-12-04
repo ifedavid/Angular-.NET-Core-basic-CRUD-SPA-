@@ -8,6 +8,9 @@ import { CategoriesComponent } from './categories/categories.component';
 
 import { DailySpendingsComponent } from './daily-spendings/daily-spendings.component';
 import { StatsComponent } from './stats/stats.component';
+import { DemoDashboardComponent } from './demo-dashboard/demo-dashboard.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+
 
 
 
@@ -18,10 +21,11 @@ const routes: Routes = [];
   imports: [RouterModule.forRoot([
     {path: 'home' , component: HomeComponent},
     {path: '', component: HomeComponent, pathMatch: 'full' },
-    {path: 'login', component: LoginComponent},
-    {path: 'categories', component: CategoriesComponent},
-    {path: 'spendings', component: DailySpendingsComponent},
-    {path: 'stats', component: StatsComponent},
+    {path: 'categories/:id', component: CategoriesComponent},
+    {path: 'DailyRecords', component: DailySpendingsComponent},
+    { path: 'Stats/:id', component: StatsComponent },
+    { path: 'demo', component: DemoDashboardComponent },
+    { path: 'Dashboard', component: DashboardComponent },
     {path: '**', redirectTo: '/home'},
 
   ])],

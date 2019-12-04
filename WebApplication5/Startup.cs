@@ -123,6 +123,7 @@ namespace WebApplication5
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseFileServer();
             app.UseSpaStaticFiles();
             app.UseAuthentication();
           

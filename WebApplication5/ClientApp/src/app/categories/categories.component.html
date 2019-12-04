@@ -1,93 +1,123 @@
 
-<div class="container">
 
-     <div style="Padding-top:30px">
-       <button  (click)="getCategories()" class="btn btn-success Facebook">Get categories</button>
-     </div>
+
+   
 
 
 
      <ngx-loading [show]="loading"></ngx-loading>
 
-     <div>
-       <h4>{{CategoryForm.value | json}}</h4>
-       <h4>{{SavedCategories.value | json}}</h4>
+     <div class="container">
 
-
-       <div *ngIf="errorMessage">
-          <div class="alert alert-danger alert-dismissible fade show" role="alert" style="text-align:center;">
-              <strong>Error!</strong> - {{errorMessage}}
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-          </div>
-
-
-       <div class="row">
-
-         <div class="col-md-4" style="padding-top:30px" *ngFor="let category of categoryData; let i = index" [formGroup] ="SavedCategories" >
-
-           <div class="card" style="width: 20rem;">
-              <div class="card-body">
-
-                <h5 class="card-title">{{category.name}}    </h5>
-               
-                    <div class="form-group">
-                      <label for="CatName">Expense Name</label>
-                      <input type="text" class="form-control" formControlName="SavedCategoryName" id="CatName" value="{{category.name}}" required>
-                    </div>
-         
-                    <div class="form-group">
-                      <label for="CatAmount">Amount spent</label>
-                      <input type="number" class="form-control" formControlName="SavedCategoryAmount" value="{{category.amount}}" id="CatAmount">
-                    </div>
-
-                    <div>
-                        <button (click)="UpdateSavedCategory(i)" style="margin-left:5px;" class="btn btn-dark">Update </button>
-                        <button (click)="DeleteSavedCategory(i)" style="margin-left:20px;" class="btn btn-danger">Delete </button>
-                      </div>
-              
-              </div>
-            </div>
-
+       <div style="padding-top:2em;" *ngIf="errorMessage">
+         <div class="alert alert-danger alert-dismissible fade show" role="alert" style="text-align:center;">
+           <strong>Error!</strong> - {{errorMessage}}
+           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+           </button>
          </div>
        </div>
-       
-
-       <form style="padding-top:30px" [formGroup]="CategoryForm">
-
-         <button (click)="AddCategory()" class="btn btn-secondary">Add new spending Expense Category</button>
-
-         <div formArrayName="Categories">
-
-           <div style="padding-top:30px" *ngFor="let category of Categories.controls; let i = index" [formGroupName]="i">
-
-             <div class="form-group">
-               <label for="CatName">Category Name</label>
-               <input type="text" class="form-control" id="CatName" required formControlName="CategoryName" placeholder="Category name">
-             </div>
-
-             <div class="form-group">
-               <label for="CatAmount">Amount spent on category</label>
-               <input type="number" class="form-control" id="CatAmount" formControlName="CategoryAmount" placeholder="Amount spent">
-             </div>
 
 
-             <div>
-               <button (click)="AddCategory()" class="btn btn-primary">Add new Category</button>
-               <button (click)="DeleteCategory(i)" class="btn btn-danger">Delete Category</button>
-             </div>
+       <div style="text-align:center; padding-top:2em;">
+         <h5>
+           Add a new expense record.
+           <br />You can add and save multiple records at a go.
+         </h5>
+       </div>
 
-           </div>
-
+       <div style="padding-top:2em;">
+         <div>
+           <a class="roundedCircle" (click)="AddCategory()"> <mat-icon class="MatIcon">add</mat-icon></a>
          </div>
+       </div>
 
 
-         <div style="padding-top:30px; float:right;">
-           <button (click)="SaveCategories()" class="btn btn-dark">Save</button>
-         </div>
-       </form>
+       <div *ngIf="!ArrayIsEmpty" style="padding-top:2em;" class="table-responsive-md">
+         <table class="table">
+           <thead>
+             <tr>
+               <th scope="col">Expense Details</th>
+               <th scope="col">Action</th>
+             </tr>
+           </thead>
+           <tbody>
+             <tr *ngFor="let category of Categories.controls; let i = index" >
+
+
+               <td style="text-align:center; padding-left:2em;">
+
+                 <div [formGroup]="CategoryForm">
+
+                   <div class="row" formArrayName="Categories">
+
+                     <div [formGroupName]="i">
+
+                       <div class="form-row">
+                         <div class="form-group col">
+
+                           <input type="text" class="form-control" id="CatName" required formControlName="CategoryName" placeholder="Name">
+                         </div>
+                         <div class="form-group col">
+
+                           <input  type="number" class="form-control" id="CatAmount" required formControlName="CategoryAmount" placeholder="Amount">
+                         </div>
+
+
+                       </div>
+
+                     </div>
+
+                   </div>
+
+                 </div>
+
+               </td>
+
+
+               <td>
+
+                 <div>
+                   <button  (click)="DeleteCategory(i)" class="btn btn-danger"><mat-icon style="vertical-align:-4px;">delete</mat-icon></button>
+                 </div>
+
+               </td>
+             </tr>
+           </tbody>
+         </table>
+       </div>
+
+       <div *ngIf="!ArrayIsEmpty" style=" max-width:200px; margin:0 auto; text-align:center;">
+         <button type="submit" (click)="SaveCategories()" class="btn btn-block  btn-dark">Save</button>
+       </div>
+
+
+       <div class="table-responsive-md" style="padding-top:2em;">
+         <table style="background-color:#64b2cd;" class="table table-hover">
+           <caption>Recorded Expenses</caption>
+           <thead>
+             <tr style="color:white;">
+               <th scope="col">#</th>
+               <th scope="col">Expense Name</th>
+               <th scope="col">Amount Spent</th>
+               <th scope="col">Action</th>
+             </tr>
+           </thead>
+
+           <tbody>
+
+             <tr style="color:#64b2cd; background-color:white;" *ngFor="let category of categoryData; let i = index">
+               <th scope="row">{{i}}</th>
+               <td>{{category.name}}</td>
+               <td>{{category.amount}}</td>
+               <td>
+                 <a (click)="DeleteSavedCategory(i)"> <mat-icon class="ExpenseIconDelete">delete</mat-icon> </a>
+               </td>
+             </tr>
+           </tbody>
+         </table>
+       </div>
+
      </div>
 
 

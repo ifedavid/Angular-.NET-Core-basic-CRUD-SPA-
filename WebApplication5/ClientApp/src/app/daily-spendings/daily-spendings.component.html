@@ -1,64 +1,30 @@
-<div class="container">
+<div style="padding-top:2em;" class="container">
+
+  <ngx-loading [show]="loading"></ngx-loading>
 
 
   <div *ngIf="errorMessage">
     <div class="alert alert-danger alert-dismissible fade show" role="alert" style="text-align:center;">
-        <strong>Error!</strong> - {{errorMessage}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    </div>
-
-
-
-  <div style="margin:2em;">
-
-
-    <h5>Select a date to start tracking your expense for that day</h5>
-
-    <ngx-loading [show]="loading"></ngx-loading>
-
-    <form (ngSubmit)="Start()" #form="ngForm" [formGroup]="DatePicker">
-        <mat-form-field>
-         <input [min]="minDate" [max]="maxDate" matInput formControlName="Date" required [matDatepicker]="picker" placeholder="Choose a date">
-         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-         <mat-datepicker #picker></mat-datepicker>
-       </mat-form-field>
-
-     <div>
-        <button  type="submit" class="btn btn-primary">Start</button>
-      </div>
-     </form>
-    </div>
-
-
-
- <div class="row">
-  <div *ngFor="let spendData of SpendingData; let i = index" class="col-md-4">
-
-  <div style=" margin-top:2em; margin:10px;" class="card">
-    <div class="card-header">
-      Expense Track
-    </div>
-    <div class="card-body">
-      <h5 class="card-title">Spending for {{SpendingData[i].dateString}}</h5>
-      <h6>Total amount spent {{SpendingData[i].totalAmount}}</h6>
-      <div style="padding-top:1em;">
-      <button  (click)="Update(i)" style="margin-left:10px;" class="btn btn-success">Update</button>
-      <button  style="margin-left:10px;" (click)="Delete(i)"  class="btn btn-danger">Delete</button>
-    </div>
-    </div>
-    <div  class="card-footer text-muted">
-    Last updated  {{SpendingData[i].updatedAt}}
+      <strong>Error!</strong> - {{errorMessage}}
     </div>
   </div>
-</div>
-</div>
 
+  <div style="text-align:center;">
+    <h4>Select a date to start Tracking.</h4>
+  </div>
 
-
-
+  <div style="padding-top:2em;" class='app-calendar'>
+    <full-calendar #calendar
+                   [header]="{
+                   left: 'title',
+                   right: 'prev,next',
+                   center: ''
+                   }"
+                   defaultView="dayGridMonth"
+                   [plugins]="calendarPlugins"
+                   [events]="calendarEvents"
+                   (dateClick)="handleDateClick($event)"></full-calendar>
+  </div>
 
 
 </div>

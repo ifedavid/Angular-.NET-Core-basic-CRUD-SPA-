@@ -38,7 +38,7 @@ namespace WebApplication5.Models
         public int GetTotalAmount(ApplicationDbContext context, Guid dateId)
         {
             int TotalAmount = 0;
-            var categories = context.Categories.Where(sp => sp.DailySpendings.DateId == dateId);
+            var categories = context.Categories.Where(sp => sp.DailySpendings.DateId == dateId && sp.IsDeleted == false);
 
             foreach (var category in categories)
             {

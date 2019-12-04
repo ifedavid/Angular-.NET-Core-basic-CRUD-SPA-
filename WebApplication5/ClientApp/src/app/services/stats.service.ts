@@ -24,12 +24,14 @@ export class StatsService {
 
   currentUser = localStorage.getItem('UserId');
 
-  private DailySpendingStatsUrl = 'api/Stats';
+  private DailySpendingStatsUrl = 'api/Stats/';
+
+
 
 
 
   GetDailySpendingStats() {
-    return this.http.get<any>(this.DailySpendingStatsUrl, httpOptions).pipe(
+    return this.http.get<any>(this.DailySpendingStatsUrl + this.currentUser, httpOptions).pipe(
     map( result => {
       console.log(result);
       return result;
@@ -39,7 +41,12 @@ export class StatsService {
 
   NextWeek(weekNumber) {
     weekNumber = weekNumber + 1;
-    return this.http.get<any>('api/Stats/GetWeek/' + weekNumber, httpOptions).pipe(
+    let statData: any[] = [];
+    statData.push({
+      WeekNumber: weekNumber,
+      UserId:  this.currentUser
+    });
+    return this.http.get<any>('api/Stats/GetWeek/' + this.currentUser + '/' + weekNumber , httpOptions).pipe(
       map(result => {
         console.log(result);
         return result;
@@ -49,7 +56,7 @@ export class StatsService {
 
   PreviousWeek(weekNumber) {
     weekNumber = weekNumber - 1;
-    return this.http.get<any>('api/Stats/GetWeek/' + weekNumber, httpOptions).pipe(
+    return this.http.get<any>('api/Stats/GetWeek/' + this.currentUser + '/' + weekNumber, httpOptions).pipe(
       map(result => {
         console.log(result);
         return result;

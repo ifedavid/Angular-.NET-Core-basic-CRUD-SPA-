@@ -4,6 +4,7 @@ import { AccountService } from '../services/account.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'angularx-social-login';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
+import { SwUpdate } from '@angular/service-worker';
 
 
 
@@ -22,7 +23,13 @@ export class LoginComponent implements OnInit {
   userData: any [] = [];
   public loading = false;
   // tslint:disable-next-line: max-line-length
-  constructor(private fb: FormBuilder, private accountService: AccountService, private route: Router, private Url: ActivatedRoute, private authService: AuthService ) { }
+  constructor(private fb: FormBuilder, private accountService: AccountService, private route: Router, private Url: ActivatedRoute, private authService: AuthService, private updates: SwUpdate) {
+
+    updates.available.subscribe(result => {
+      updates.activateUpdate().then(() => document.location.reload());
+    })
+
+  }
 
 
    returnUrl: string;
@@ -58,8 +65,8 @@ export class LoginComponent implements OnInit {
         this.accountService.Login(this.userData[0]).subscribe(
           result => {
           console.log('success', result);
-          this.route.navigate(['/home']);
-          this.loading = false;
+            window.location.reload();
+         
         },
         error => {
           this.resultMessage = 'There was an error with our database. Sorry!';
@@ -98,8 +105,8 @@ export class LoginComponent implements OnInit {
         this.accountService.Login(this.userData[0]).subscribe(
           result => {
           console.log('success', result);
-          this.loading = false;
-          this.route.navigate(['/home']);
+            window.location.reload();
+         
         },
         error => {
           this.loading = false;

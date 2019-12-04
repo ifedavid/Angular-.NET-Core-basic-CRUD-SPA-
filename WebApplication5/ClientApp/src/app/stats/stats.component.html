@@ -1,37 +1,116 @@
 <div>
 
 
-  <h4>{{SelectGroup.value | json}}</h4>
 
-<div class="container">
+
+  <div class="container">
 
     <ngx-loading [show]="loading"></ngx-loading>
 
-  <form [formGroup]="SelectGroup">
+    <div style="margin-top:2em;" class="card">
 
-<select required formControlName="Selector">
+      <div class="card-body row">
+        <div class="col-md-10">
+          <h3>Performance</h3>
+        </div>
 
-</select>
+        <div class="col-md-2">
+          <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+            <option selected>Choose...</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+        </div>
 
-<button class="btn btn-primary" (click)="getDailySpending()">Go!</button>
 
-</form>
+        <div style="margin:1em; padding:0px;" class="col-md-3">
+          <div class="card">
+            <div style="padding:7px;" class="card-body">
+              <div class="col-9">
+                <p style="font-size:large; margin:5px;">
+                  Records
+                </p>
+                <p style="font-size:47px; margin:0px; font-weight:200;">
+                  226
+                </p>
+              </div>
 
-</div>
+              <div class="col-3">
 
-<google-chart #chart
-   [title]="title"
-   [type]="type"
-   [data]="data"
-   [columnNames]="columnNames"
-   [options]="options"
-   [width]="width"
-   [height]="height">
-</google-chart>
+              </div>
+            </div>
+          </div>
+        </div>
 
-<div>
-<button (click)="NextWeek()" class="btn btn-primary">Next Week</button>
-<button (click)="PreviousWeek()" class="btn btn-secondary">Previous Week</button>
-</div>
+        <div style="margin:2em;" class="col-md-3">
+          <div class="card">
+            <div  class="card-body">
+              <div class="col-9">
+                <p>
+                  Records
+                </p>
+                <p>
+                  226
+                </p>
+              </div>
+
+              <div class="col-3">
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div style="margin:2em;" class="col-md-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="col-9">
+                <p>
+                  Records
+                </p>
+                <p>
+                  226
+                </p>
+              </div>
+
+              <div class="col-3">
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  <!--
+  <google-chart #chart
+     style="width:10%;"
+     [dynamicResize]="dynamicResize"
+     (select)="onSelect($event)"
+     [title]="title"
+     [type]="type"
+     [data]="data"
+     [columnNames]="columnNames"
+     [options]="options"
+     [width]="width"
+     [height]="height">
+  </google-chart>
+
+       <div>
+    <button (click)="NextWeek()" class="btn btn-primary">Next Week</button>
+    <button (click)="PreviousWeek()" class="btn btn-secondary">Previous Week</button>
+  </div>
+
+        -->
+
+
 
 </div>

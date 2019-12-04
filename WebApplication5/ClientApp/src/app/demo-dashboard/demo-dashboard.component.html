@@ -1,0 +1,254 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<div>
+
+  
+    
+
+  <div class="" style="background-color:whitesmoke;">
+
+
+    <div style="padding-top:2em;">
+      <div class="mb-2 " style="background-color:white; margin-top:2em; text-align:center; opacity:0.7; padding:1em;">
+        <div>
+          <h4>
+            Profile Overview
+          </h4>
+          <p>
+            This is an example dashboard created using build-in elements and components.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <!--Usage overview-->
+      <div style="padding-top:3em;">
+        <div class="card">
+          <div class="card-header redundant">
+            Usage Overview
+          </div>
+          <div style="height:auto;" class="card-body">
+            <div class="row">
+
+              <div class="col-md-4">
+                <div class="card no-shadow">
+
+                  <div class="StatsCard">
+
+                    <div style="" class="roundedCircle">
+
+                      <div style="background-color:#DD5600; height:100%; width:100%;">
+                        <mat-icon class="MatIcon" style="color:white"> insert_chart_outlined</mat-icon>
+                      </div>
+
+                    </div>
+
+                    <div>
+                      <h1 style="font-weight:600">8 Weeks</h1>
+                      <small>Recorded in total</small>
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="card no-shadow">
+                  <div class="StatsCard">
+
+                    <div style="" class="roundedCircle">
+
+                      <div style="background-color:#DF7D81; height:100%; width:100%;">
+                        <mat-icon class="MatIcon">trending_up</mat-icon>
+                      </div>
+
+                    </div>
+
+                    <div>
+                      <h1 style="font-weight:600">45 Days</h1>
+                      <small>Recorded in total</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="card no-shadow">
+                  <div class="StatsCard">
+
+                    <div style="" class="roundedCircle">
+
+                      <div style="background-color:#81B14D; height:100%; width:100%;">
+                        <mat-icon class="MatIcon">done_outline</mat-icon>
+                      </div>
+
+                    </div>
+                    <div>
+                      <h1 style="font-weight:600">17,000</h1>
+                      <small>Total spendings recorded</small>
+                    </div>
+                  
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div style="text-align:center" class="card-footer redundant">
+            <a href="#" class="btn btn-primary">See full analysis</a>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!--Top spending data analysis and Top 10 spendings-->
+      <div style="padding-top:3em;">
+
+        <div class="row">
+
+          <!--Top spending data analysis-->
+          <div class="col-md-6">
+
+            <div class="card">
+
+              <div class="card-header redundant">
+                Top Spending Analysis
+              </div>
+
+              <div class="card-body">
+                <google-chart style="height:auto; width:auto;"
+                              [title]="title"
+                              [type]="type"
+                              [data]="data"
+                              [columnNames]="columnNames"
+                              [options]="options">
+                </google-chart>
+              </div>
+
+              <div class="card-footer redundant">
+                13th November 2019
+              </div>
+            </div>
+
+          </div>
+
+          <!--Top 10 spendings-->
+          <div class="col-md-6">
+
+            <div style="height:340px;" class="card">
+
+              <div class="card-header redundant">
+                Top Spending Analysis
+              </div>
+
+              <div style="overflow-y:auto;" class="card-body">
+                <ul>
+                  <li>Something</li>
+                  <li>Something</li>
+                  <li>Something</li>
+                  <li>Something</li>
+                  <li>Something</li>
+                  <li>Something</li>
+                  <li>Something</li>
+                  <li>Something</li>
+                  <li>Something</li>
+                  <li>Something</li>
+                  <li>Something</li>
+                  <li>Something</li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div style="padding-top:3em;">
+        <div class="card">
+          <div class="card-header redundant">
+            Usage Overview
+          </div>
+          <div style="height:auto;" class="card-body">
+            <div class="row">
+
+              <div class="col-md-4">
+                <div class="card no-shadow">
+
+                  <div class="StatsCard">
+
+                    <div style="" class="roundedCircle">
+
+                      <div style="background-color:#DD5600; height:100%; width:100%;">
+                        <mat-icon class="MatIcon" style="color:white"> insert_chart_outlined</mat-icon>
+                      </div>
+
+                    </div>
+
+                    <div>
+                      <h1 style="font-weight:600">17,000</h1>
+                      <small>Total spendings recorded</small>
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="card no-shadow">
+                  <div class="StatsCard">
+
+                    <div style="" class="roundedCircle">
+
+                      <div style="background-color:#DF7D81; height:100%; width:100%;">
+                        <mat-icon class="MatIcon">trending_up</mat-icon>
+                      </div>
+
+                    </div>
+
+                    <div>
+                      <h1 style="font-weight:600">45</h1>
+                      <small>Total days recorded</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="card no-shadow">
+                  <div class="StatsCard">
+
+                    <div style="" class="roundedCircle">
+
+                      <div style="background-color:#81B14D; height:100%; width:100%;">
+                        <mat-icon class="MatIcon">done_outline</mat-icon>
+                      </div>
+
+                    </div>
+
+                    <div>
+                      <h1 style="font-weight:600">8</h1>
+                      <small>Weeks of records</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div style="text-align:center" class="card-footer redundant">
+            <a href="#" class="btn btn-primary">See full analysis</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

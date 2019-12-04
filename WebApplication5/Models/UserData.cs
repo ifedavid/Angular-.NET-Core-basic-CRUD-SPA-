@@ -31,7 +31,7 @@ namespace WebApplication5.Models
 
         public string Fullname()
         {
-            return FirstName + LastName;
+            return FirstName + " " + LastName;
         }
     }
 }

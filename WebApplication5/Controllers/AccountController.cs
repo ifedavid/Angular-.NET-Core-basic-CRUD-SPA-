@@ -19,16 +19,14 @@ namespace WebApplication5.Controllers
     public class AccountController : Controller
     {
 
-        public readonly UserManager<IdentityUser> _userManager;
-        public readonly SignInManager<IdentityUser> _signInManager;
+   
         private readonly ApplicationDbContext _db;
       
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ApplicationDbContext db)
+        public AccountController( ApplicationDbContext db)
         {
             _db = db;
-            _userManager = userManager;
-            _signInManager = signInManager;
+       
         }
 
 
@@ -71,7 +69,8 @@ namespace WebApplication5.Controllers
                             message = "User data has already been saved",
                             token = new JwtSecurityTokenHandler().WriteToken(token),
                             expiration = token.ValidTo,
-                            username = alreadySaved.Fullname(),
+                            username = alreadySaved.FirstName,
+                            pictureUrl = alreadySaved.PictureUrl,
                             userRole = "user",
                         });
                     }
@@ -98,7 +97,8 @@ namespace WebApplication5.Controllers
                     {
                         id = user.Id,
                         message = "User Login successful",
-                        username = user.Fullname(),
+                        username = user.FirstName,
+                        pictureUrl = user.PictureUrl,
                         userRole = "user",
                         token = new JwtSecurityTokenHandler().WriteToken(token),
                         expiration = token.ValidTo

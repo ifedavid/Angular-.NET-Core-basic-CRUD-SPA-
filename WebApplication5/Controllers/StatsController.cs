@@ -17,14 +17,21 @@ namespace WebApplication5.Controllers
     public class StatsController : Controller
     {
         private ApplicationDbContext context { get; set; }
+
+        private WebApplication5.Models.UserData CurrentUser {get; set;}
         public StatsController(ApplicationDbContext _context)
         {
+
             context = _context;
         }
         // GET: api/Stats
-        [Microsoft.AspNetCore.Mvc.HttpGet]
-        public async Task<ActionResult> DailyStats()
+        [Microsoft.AspNetCore.Mvc.HttpGet("{id}")]
+        public async Task<ActionResult> DailyStats([FromUri] int id)
         {
+            var currentUser = await context.UserData.FindAsync(id);
+
+            CurrentUser = currentUser;
+
             var todayDate = DateTime.UtcNow;
 
             CultureInfo myCI = new CultureInfo("en-UK");
@@ -35,7 +42,9 @@ namespace WebApplication5.Controllers
 
             var weekNumber = myCal.GetWeekOfYear(todayDate, myCWR, myFirstDOW);
 
-            var DailySpendings = await context.Spendings.Where(sp => sp.WeekNumber == weekNumber && sp.isDeleted == false).ToListAsync();
+          
+
+            var DailySpendings = await context.Spendings.Where(sp => sp.WeekNumber == weekNumber && sp.isDeleted == false && sp.User.Id == id).OrderBy(sp => sp.Date).ToListAsync();
 
             foreach (var dailySpending in DailySpendings)
             {
@@ -46,12 +55,6 @@ namespace WebApplication5.Controllers
 
         }
 
-        // GET: api/Stats/5
-        [Microsoft.AspNetCore.Mvc.HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
 
         // POST: api/Stats
         [Microsoft.AspNetCore.Mvc.HttpPost]
@@ -59,24 +62,12 @@ namespace WebApplication5.Controllers
         {
         }
 
-        // PUT: api/Stats/5
-        [Microsoft.AspNetCore.Mvc.HttpPut("{id}")]
-        public void Put(int id, [Microsoft.AspNetCore.Mvc.FromBody] string value)
-        {
-        }
-
-        // DELETE: api/Stats/5
-        [Microsoft.AspNetCore.Mvc.HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
-
         //Get Week: api/Stats/action
-        [HttpGet("[action]/{weekNumber}")]
-        public async Task<IActionResult> GetWeek([FromUri] int weekNumber)
+        [HttpGet("[action]/{userId}/{weekNumber}")]
+        public async Task<IActionResult> GetWeek([FromUri] int userId, int weekNumber)
         {
            
-            var DailySpendings = await context.Spendings.Where(sp => sp.WeekNumber == weekNumber && sp.isDeleted == false).ToListAsync();
+            var DailySpendings = await context.Spendings.Where(sp => sp.WeekNumber == weekNumber && sp.isDeleted == false && sp.User.Id == userId).OrderBy(sp => sp.Date).ToListAsync();
 
             if (DailySpendings.Count > 0)
             {
@@ -92,5 +83,12 @@ namespace WebApplication5.Controllers
             return BadRequest(new { error = "There are no records for this week" });
         }
 
+    }
+
+    public class StatsData
+    {
+        public int UserId { get; set; }
+
+        public int WeekNumber { get; set; }
     }
 }

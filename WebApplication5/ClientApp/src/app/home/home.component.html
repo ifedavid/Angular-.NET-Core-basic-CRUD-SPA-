@@ -9,7 +9,7 @@
 
     <div class="container">
       <h1 style="font-size:55px;">
-        Welcome to SpendBeta!
+        Welcome to SpendBeta! 
       </h1>
 
       <h6 style="font-weight:300;padding-top:10px;">
@@ -17,8 +17,12 @@
       </h6>
 
 
-      <div style="padding-top:1em;">
+      <div *ngIf="!UserId" style="padding-top:1em;">
         <button data-toggle="modal" data-target="#exampleModalScrollable" class="btn HomeButton">Get Started</button>
+      </div>
+
+      <div *ngIf="UserId" style="padding-top:1em;">
+        <button data-toggle="modal" routerLink="/DailyRecords" routerLinkActive="active" class="btn HomeButton">Start Tracking</button>
       </div>
 
     </div>
@@ -60,7 +64,7 @@
     </div>
   </div>
 
-  <div style="padding-top:em;" class="Features">
+  <div style="padding-top:2em;" class="Features">
 
 
     <div style="margin-top:5em; background-color:whitesmoke;">

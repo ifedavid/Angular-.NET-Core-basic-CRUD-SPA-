@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormBuilder, Validators} from '@angular/forms';
 import {StatsService} from '../services/stats.service';
 import {UsersService} from '../services/users.service';
+import { SwUpdate } from '@angular/service-worker';
 
 @Component({
   selector: 'app-stats',
@@ -22,10 +23,13 @@ export class StatsComponent implements OnInit {
    ];
    columnNames = ['Year', 'Asia', 'canada'];
    options = { colors: ['#e0440e', '#e6693e'] };
-   width = 750;
-   height = 400;
+  dynamicResize = true;
 
-  constructor(private fb: FormBuilder, private statsService: StatsService, private userService: UsersService) { }
+  constructor(private fb: FormBuilder, private statsService: StatsService, private userService: UsersService, private updates: SwUpdate) {
+    updates.available.subscribe(result => {
+      updates.activateUpdate().then(() => document.location.reload());
+    })
+  }
 
   SelectGroup = this.fb.group({
 
@@ -36,12 +40,12 @@ export class StatsComponent implements OnInit {
 
 
   ngOnInit() {
-  this.loadDailySpending();
+  this.GetDailySpending();
     }
 
 
 
-  loadDailySpending() {
+  GetDailySpending() {
     this.loading = true;
 
     let todayDate =  new Date().toDateString();
@@ -64,8 +68,6 @@ export class StatsComponent implements OnInit {
 
         this.columnNames = ['Date', 'Total Amount'];
         this.options = { colors: ['#e0440e', '#e6693e'] };
-        this.width = 850;
-        this.height = 400;
         this.loading = false;
       },
       error => {
@@ -157,14 +159,16 @@ export class StatsComponent implements OnInit {
 
         this.columnNames = ['Expense', 'Amount'];
         this.options = { colors: ['#e0440e', '#e6693e'] };
-        this.width = 550;
-        this.height = 400;
       },
       error => {
         console.log(error);
       }
     );
     }
+  }
+
+  onSelect(arg) {
+    console.log(arg);
   }
 
 }

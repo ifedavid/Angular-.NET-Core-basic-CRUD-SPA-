@@ -53,11 +53,12 @@ namespace WebApplication5.Controllers
 
                 var spending = await dbContext.Spendings.FindAsync(dateId);
 
+
                 if (categoryModel.Length > 0)
                 {
                     foreach (var categories in categoryModel)
                     {
-                        var savedCategory = dbContext.Categories.Where(c => c.Name == categories.CategoryName && c.DailySpendings.DateId == dateId);
+                        var savedCategory = dbContext.Categories.Where(c => c.Name == categories.CategoryName && c.DailySpendings.DateId == dateId && c.IsDeleted == false);
 
                         if (savedCategory.Count() > 0)
                         {

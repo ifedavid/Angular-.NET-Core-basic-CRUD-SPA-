@@ -54,7 +54,8 @@ get CurrentUserRole() {
             localStorage.setItem('loginStatus', '1');
             localStorage.setItem('UserId', result.id);
             localStorage.setItem('token', result.token);
-            localStorage.setItem('tokenExpiration', result.expiration);
+        localStorage.setItem('tokenExpiration', result.expiration);
+        localStorage.setItem('PictureUrl', result.pictureUrl);
             console.log('We sent a message to our Controller API. It works');
       }
       return result;
@@ -71,9 +72,22 @@ get CurrentUserRole() {
      localStorage.removeItem('token');
      localStorage.removeItem('tokenExpiration');
      localStorage.removeItem('username');
+     localStorage.removeItem('UserId');
      localStorage.removeItem('userRole');
      this.router.navigate(['/login']);
      console.log('User Logged out successfully');
    }
+
+
+  AuthorizeUser() {
+  let userId = this.CurrentUserId;
+   let loginStatus = this.loginStatus;
+   
+
+    if (userId == null) {
+      this.router.navigate(['/home']);
+    }
+
+  }
 
 }

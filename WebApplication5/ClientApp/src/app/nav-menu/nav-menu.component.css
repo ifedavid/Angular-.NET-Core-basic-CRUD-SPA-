@@ -1,0 +1,8 @@
+.signOut {
+  border:none;
+  background-color: transparent;
+}
+.signOut:hover {
+  cursor: pointer;
+}
+
