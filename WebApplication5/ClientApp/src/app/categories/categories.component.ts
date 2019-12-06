@@ -4,7 +4,6 @@ import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { FormArray, FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { SwUpdate } from '@angular/service-worker';
 
 
 
@@ -15,12 +14,8 @@ import { SwUpdate } from '@angular/service-worker';
 })
 export class CategoriesComponent implements OnInit {
 
-  constructor(private userService: UsersService, private fb: FormBuilder, private route: Router, private activatedRoute: ActivatedRoute, private updates: SwUpdate) {
+  constructor(private userService: UsersService, private fb: FormBuilder, private route: Router, private activatedRoute: ActivatedRoute) {
     this.createForm();
-
-    updates.available.subscribe(result => {
-      updates.activateUpdate().then(() => document.location.reload());
-    })
   }
 
 

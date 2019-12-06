@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { SwUpdate } from '@angular/service-worker';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +8,8 @@ import { SwUpdate } from '@angular/service-worker';
 export class AppComponent implements OnInit {
   title = 'ClientApp';
 
-  constructor(private updates: SwUpdate) {
-    updates.available.subscribe(result => {
-      updates.activateUpdate().then(() => document.location.reload());
-    })
+  constructor() {
+  
   }
 
   ngOnInit() {

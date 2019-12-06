@@ -10,7 +10,6 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGrigPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
-import { SwUpdate } from '@angular/service-worker';
 
 
 @Component({
@@ -31,11 +30,8 @@ export class DailySpendingsComponent implements OnInit {
   UserId: any = localStorage.getItem('UserId');
   minDate: Date = new Date(2018, 11);
   maxDate: Date = new Date(2051, 11);
-  constructor(private fb: FormBuilder, private userService: UsersService, private route: Router, private accountService: AccountService, private activatedRoute: ActivatedRoute, private updates: SwUpdate) {
+  constructor(private fb: FormBuilder, private userService: UsersService, private route: Router, private accountService: AccountService, private activatedRoute: ActivatedRoute) {
 
-    updates.available.subscribe(result => {
-      updates.activateUpdate().then(() => document.location.reload());
-    })
   }
 
   DatePicker = this.fb.group({

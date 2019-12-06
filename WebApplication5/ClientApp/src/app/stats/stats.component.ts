@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormBuilder, Validators} from '@angular/forms';
 import {StatsService} from '../services/stats.service';
 import {UsersService} from '../services/users.service';
-import { SwUpdate } from '@angular/service-worker';
 
 @Component({
   selector: 'app-stats',
@@ -25,10 +24,8 @@ export class StatsComponent implements OnInit {
    options = { colors: ['#e0440e', '#e6693e'] };
   dynamicResize = true;
 
-  constructor(private fb: FormBuilder, private statsService: StatsService, private userService: UsersService, private updates: SwUpdate) {
-    updates.available.subscribe(result => {
-      updates.activateUpdate().then(() => document.location.reload());
-    })
+  constructor(private fb: FormBuilder, private statsService: StatsService, private userService: UsersService) {
+ 
   }
 
   SelectGroup = this.fb.group({

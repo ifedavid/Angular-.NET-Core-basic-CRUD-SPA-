@@ -4,7 +4,6 @@ import { AccountService } from '../services/account.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'angularx-social-login';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
-import { SwUpdate } from '@angular/service-worker';
 
 
 
@@ -23,11 +22,9 @@ export class LoginComponent implements OnInit {
   userData: any [] = [];
   public loading = false;
   // tslint:disable-next-line: max-line-length
-  constructor(private fb: FormBuilder, private accountService: AccountService, private route: Router, private Url: ActivatedRoute, private authService: AuthService, private updates: SwUpdate) {
+  constructor(private fb: FormBuilder, private accountService: AccountService, private route: Router, private Url: ActivatedRoute, private authService: AuthService) {
 
-    updates.available.subscribe(result => {
-      updates.activateUpdate().then(() => document.location.reload());
-    })
+  
 
   }
 

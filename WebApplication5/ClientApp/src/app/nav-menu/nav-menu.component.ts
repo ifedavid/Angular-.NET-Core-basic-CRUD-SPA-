@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../services/account.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { SwUpdate } from '@angular/service-worker';
 
 
 @Component({
@@ -11,11 +10,9 @@ import { SwUpdate } from '@angular/service-worker';
 })
 export class NavMenuComponent implements OnInit {
 
-  constructor(private accountService: AccountService, private route: Router, private updates: SwUpdate) {
+  constructor(private accountService: AccountService, private route: Router) {
 
-    updates.available.subscribe(result => {
-      updates.activateUpdate().then(() => document.location.reload());
-    })
+
   }
 
   Username = this.accountService.CurrentUsername.value;
